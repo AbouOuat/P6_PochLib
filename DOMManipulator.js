@@ -60,7 +60,12 @@ class DOMManipulator
 
 
          //Ajout des zones de texte  .. A SUPPRIMER
-         let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
+         /* let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
+     
+         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo"); */
+
+
+         let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les ZSZDZDZ");
      
          let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
         
@@ -82,17 +87,26 @@ class DOMManipulator
             console.log (theGoogleResult);
             let listBooks = [];
 
-            for (let i=0; i<theGoogleResult.items.length; i++)
+            if (theGoogleResult.items?.length > 0) //Si pas de retour, on ne rempli pas le tableau
             {
-                listBooks.push(new Book (theGoogleResult.items[i]));
 
+                for (let i=0; i<theGoogleResult.items.length; i++)
+                {
+                    listBooks.push(new Book (theGoogleResult.items[i]));
+
+                }
             }
-            //Affichage des resultats
-           if (listBooks.length>0)
-           {
-            DOMManipulator.affichageResultats(listBooks);
-           }
-                   
+                //Affichage des resultats
+            //    if (listBooks.length>0)
+             //   {
+                    DOMManipulator.affichageResultats(listBooks); //On gère le contenu vide ou non, de listBooks, dans la méthode affichageResultat
+               // }
+            
+            //}
+            //else 
+            //{
+              //  DOMManipulator.affichageResultatsVide();
+            //}  
 
         });
 
@@ -239,7 +253,7 @@ class DOMManipulator
         console.log(blocBook);
         return blocBook;
     }
-    
+
     static affichageResultats (listBooks)
     {
         //
@@ -259,10 +273,53 @@ div.classList.remove("foo", "bar", "baz"); */
 
         let sectionResultat = document.createElement("section");
         sectionResultat.className = "clsSectionResultat";
+
+        if (listBooks.length > 0)
+        {
+            console.log ("Nombrede res:"+listBooks.length);
+            //sectionResultat
+            for (let i=0; i<listBooks.length; i++)
+            {
+                let theBook = DOMManipulator.generateBloc(listBooks[i]);
+                sectionResultat.appendChild (theBook);
+            }
+        }
+        else {
+        //console.log ("Vpas de resultat de recherche");
+        sectionResultat.innerHTML += "Aucun livre n'a été trouvé";
+        
+        }
+
+        //positionnnemt des balises
+        sectionNouveauLivre.insertBefore(lblResultatRecherche,strContent);
+        sectionNouveauLivre.insertBefore(sectionResultat,strContent);
+        
+    }
+
+    
+    /* static affichageResultats (listBooks)
+    {
+        //
+        //console.log("Affichage reultalt:" + listBooks.length );
+        let sectionNouveauLivre = document.getElementById("myBooks");
+        let strContent = document.getElementById("content");
+
+        //On doit se postionner sur la page et afficher 
+        //let lblResultatRecherche = document.createElement("p");
+        let lblResultatRecherche = document.createElement("h2");
+        lblResultatRecherche.innerHTML += "Résultat de recherche";
+        lblResultatRecherche.className = "clsLblResultatRecherche";
+        
+        // Exemple ajouter ou supprimer plusieurs classes
+        //div.classList.add("foo", "bar", "baz");
+        //div.classList.remove("foo", "bar", "baz"); 
+
+        let sectionResultat = document.createElement("section");
+        sectionResultat.className = "clsSectionResultat";
         //sectionResultat
         for (let i=0; i<listBooks.length; i++)
         {
-         /*  console.log(" ABCD :" + i );    */ 
+         // console.log(" ABCD :" + i );
          let theBook = DOMManipulator.generateBloc(listBooks[i]);
          sectionResultat.appendChild (theBook);
         }
@@ -272,7 +329,18 @@ div.classList.remove("foo", "bar", "baz"); */
         sectionNouveauLivre.insertBefore(lblResultatRecherche,strContent);
         sectionNouveauLivre.insertBefore(sectionResultat,strContent);
         
-    }
+    } */
+
+    /* static affichageResultatsVide ()
+    {
+        let sectionNouveauLivre = document.getElementById("myBooks");
+        let strContent = document.getElementById("content");
+
+        let lblResultatRecherche = document.createElement("h2");
+        lblResultatRecherche.innerHTML += "Résultat de recherche";
+        lblResultatRecherche.className = "clsLblResultatRecherche";
+
+    } */
 
 
 }
