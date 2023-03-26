@@ -23,8 +23,12 @@ h2 {
     border-radius: 10px;
     margin-bottom: 15px;
     
-    .clsButton--test1{
-        background:  rgb(255, 255, 255);
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+    .clsButton__rechercher{
+        background:  rgb(255, 255, 130);
+        margin-left: 90%;
     }
       
 }
@@ -40,6 +44,20 @@ h2 {
     margin-bottom: 15px;  
 }
 
+.clsButton__rechercher2{
+    
+    width: 200px;
+	padding: 15px;
+	border: none;
+    background: v.$secondary-color;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    
+    display: block;
+    margin-left: 0px;
+  }
 /* .clsButton{
     width: 200px;
 	padding: 15px;

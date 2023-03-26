@@ -68,7 +68,9 @@ class DOMManipulator
 
         //Ajout des boutons
         //Vendredi 17/02/2023
-        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
+        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
+        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton clsButton__rechercher2");
+        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
 
         sBoutonRechercher.addEventListener("click", async function (){
             console.log ("Test");

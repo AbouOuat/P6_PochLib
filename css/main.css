@@ -19,9 +19,13 @@ h2 {
   text-align: center;
   border-radius: 10px;
   margin-bottom: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-.clsButton .clsButton--test1 {
-  background: rgb(255, 255, 255);
+.clsButton .clsButton__rechercher {
+  background: rgb(255, 255, 130);
+  margin-left: 90%;
 }
 
 .clsButton--orange {
@@ -33,6 +37,19 @@ h2 {
   text-align: center;
   border-radius: 10px;
   margin-bottom: 15px;
+}
+
+.clsButton__rechercher2 {
+  width: 200px;
+  padding: 15px;
+  border: none;
+  background: #059340;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  display: block;
+  margin-left: 0px;
 }
 
 /* .clsButton{
