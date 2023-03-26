@@ -214,15 +214,17 @@ class DOMManipulator
         lblAuteur.classList.add("clsAuteur");
 
 
+        let theDesc = theBook.description ? theBook.description.slice(0,200) : "Information manquante";
         let lblDescription = document.createElement("div");
-        lblDescription.innerHTML+="Description : " +  theBook.description?.slice(0,200);
+        lblDescription.innerHTML+="Description : " +  theDesc;
         lblDescription.classList.add("clsDescription");
 
 
         let objImage = document.createElement("img");
         objImage.classList.add("clsImage");
-        objImage.src = theBook.image;
-        objImage.alt = "Pas d'image pour ce resultat de recherche";
+        objImage.src = theBook.image ? theBook.image : "/images/unavailable.png" ;
+        //href=""
+        //objImage.alt = "Pas d'image pour ce resultat de recherche";
         /* objImage.innerHTML+="Description : " +  theBook.image?.slice(0,200);
         objImage.classList.add("clsImage"); */
 
