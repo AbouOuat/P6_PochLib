@@ -60,14 +60,14 @@ class DOMManipulator
 
 
          //Ajout des zones de texte  .. A SUPPRIMER
-         /* let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
-     
-         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo"); */
-
-
-         let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les ZSZDZDZ");
+         let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
      
          let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
+
+
+         /* let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les ZSZDZDZ");
+     
+         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo"); */
         
 
 
@@ -212,14 +212,22 @@ class DOMManipulator
         //Création d'un bloc contenant tous les éléments ci-dessous
         let blocBook = document.createElement("div");
         blocBook.classList.add("clsBorderBook");
-                
+        
+        //Pour Titre et marque page
+        //let lblTitreMarquepage = document.createElement("div");
+
         let lblTitre = document.createElement("div");
         lblTitre.innerHTML+="Titre : " + theBook.titre;
         lblTitre.classList.add("clsTitre");
         //lblTitre.className = "clsTitre";
         
-        
+        //Marquepage
+        /* <i class="fa-solid fa-bookmark"></i> */
+        let objMarquepage = document.createElement("i");
+        objMarquepage.classList.add("fa-solid", "fa-bookmark");
     
+
+
         let lblIdentifiant = document.createElement("div");
         lblIdentifiant.innerHTML+="Id : " + theBook.identifiant;
         lblIdentifiant.classList.add("clsIdentifiant");
@@ -244,11 +252,18 @@ class DOMManipulator
         /* objImage.innerHTML+="Description : " +  theBook.image?.slice(0,200);
         objImage.classList.add("clsImage"); */
 
+
+        {/* <i class="fa-solid fa-trash"></i> */}
+
+        let objTrash = document.createElement("i");
+        objTrash.classList.add("fa-solid", "fa-trash");
+
         blocBook.appendChild(lblTitre);
         blocBook.appendChild(lblIdentifiant);
         blocBook.appendChild(lblAuteur);
         blocBook.appendChild(lblDescription);
         blocBook.appendChild(objImage);
+        blocBook.appendChild(objTrash);
         console.log(" Le bloc" );
         console.log(blocBook);
         return blocBook;
