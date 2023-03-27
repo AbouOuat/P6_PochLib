@@ -213,20 +213,22 @@ class DOMManipulator
         let blocBook = document.createElement("div");
         blocBook.classList.add("clsBorderBook");
         
-        //Pour Titre et marque page
-        //let lblTitreMarquepage = document.createElement("div");
 
+        //Pour Titre et marque page.. on prend un wrapper pour diviser
+        let lblTitreMarquepage = document.createElement("div");
+        lblTitreMarquepage.classList.add("wrapper");
+        
         let lblTitre = document.createElement("div");
         lblTitre.innerHTML+="Titre : " + theBook.titre;
         lblTitre.classList.add("clsTitre");
-        //lblTitre.className = "clsTitre";
-        
-        //Marquepage
-        /* <i class="fa-solid fa-bookmark"></i> */
+                
+        //Marquepage ..pas besoin de div finalement dans les  wrapper
+        //let divMarquepage = document.createElement("div");
+        //divMarquepage.classList.add("clsMarquepage");
         let objMarquepage = document.createElement("i");
-        objMarquepage.classList.add("fa-solid", "fa-bookmark");
+        objMarquepage.classList.add("fa-solid", "fa-bookmark");  /* <i class="fa-solid fa-bookmark"></i> */
+        objMarquepage.classList.add("clsMarquepage");
     
-
 
         let lblIdentifiant = document.createElement("div");
         lblIdentifiant.innerHTML+="Id : " + theBook.identifiant;
@@ -253,12 +255,22 @@ class DOMManipulator
         objImage.classList.add("clsImage"); */
 
 
-        {/* <i class="fa-solid fa-trash"></i> */}
+        //{/* <i class="fa-solid fa-trash"></i> */}
 
         let objTrash = document.createElement("i");
         objTrash.classList.add("fa-solid", "fa-trash");
 
-        blocBook.appendChild(lblTitre);
+
+        //Présentation des éléments
+
+        //blocBook.appendChild(lblTitre);
+        lblTitreMarquepage.appendChild (lblTitre);
+       // divMarquepage.appendChild (objMarquepage);
+        //lblTitreMarquepage.appendChild(divMarquepage);
+        lblTitreMarquepage.appendChild(objMarquepage);
+
+
+        blocBook.appendChild(lblTitreMarquepage);
         blocBook.appendChild(lblIdentifiant);
         blocBook.appendChild(lblAuteur);
         blocBook.appendChild(lblDescription);
