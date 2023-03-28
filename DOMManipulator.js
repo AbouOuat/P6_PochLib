@@ -16,22 +16,7 @@ class DOMManipulator
         boutonAjoutLivre.textContent="Ajouter un livre";
         boutonAjoutLivre.name="ajoutLivre";
         boutonAjoutLivre.classList.add("clsButton");
-        // boutonAjoutLivre.addEventListener("click", function(event)
-        //     {
-        //         let sectionNouveauLivre = document.getElementById("myBooks");
-        //         let strHR = document.getElementsByTagName("hr")[0]; //Crochet avec 0 pour prendre le premier hr
-
-        //         sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre");
-        //         sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur");
-
-        //         sectionNouveauLivre.insertBefore (sTitreLivreTextBox,strHR);
-        //         sectionNouveauLivre.insertBefore (sAuteurLivreTextBox, strHR);
-        //         event.target.parentNode.removeChild(event.target);
-                
-        //     }
         
-        // )
-
 
         //boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch.bind(null,"toto")); //On appelle DOMManipulator.insertFieldSearch variable = function
       //ou
@@ -61,8 +46,7 @@ class DOMManipulator
 
          //Ajout des zones de texte  .. A SUPPRIMER
          let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
-     
-         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
+        let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
 
 
          /* let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les ZSZDZDZ");
@@ -74,9 +58,9 @@ class DOMManipulator
         //Ajout des boutons
         //Vendredi 17/02/2023
         //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
-        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton clsButton__rechercher2");
+        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton clsButton__rechercher2");
         
-        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
+        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
         //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
         sBoutonRechercher.classList.add("clsButtonrechercher");
 
@@ -97,32 +81,14 @@ class DOMManipulator
                     listBooks.push(new Book (theGoogleResult.items[i]));
                 }
             }
-                //Affichage des resultats
-            //    if (listBooks.length>0)
-             //   {
-                    DOMManipulator.affichageResultats(listBooks); //On gère le contenu vide ou non, de listBooks, dans la méthode affichageResultat
-               // }
-            
-            //}
-            //else 
-            //{
-              //  DOMManipulator.affichageResultatsVide();
-            //}  
+           //Affichage des resultats
+           DOMManipulator.affichageResultats(listBooks); //On gère le contenu vide ou non, de listBooks, dans la méthode affichageResultat
+             
 
         });
 
         
         let sDiv  =  document.createElement("Div");
-
-        //sBoutonRechercher.addEventListener("click", function (){console.log("Toto d")});
-          //Toutes ces classes sont appelées depuis une classe mère  (pochlib.js par exemple)
-        //On appelle une classe à laquelle on transmet les arguments et on fait la recherche de l'api
-        // 1 classe pour accueillir et netoyer le résultat..liste de livre nettoyer
-        // 1 classe pour afficher depuis l'objet nettoyé (DomManipulator pour le livre)
-        //Dans le la fonction, il faut appler la classe  ..à laquelle on transmet les arguments et on fait la recherche
-        
-
-
         //
         //let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton clsButton--orange");
         //let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton");
@@ -148,29 +114,10 @@ class DOMManipulator
         //A modifier , on doit le cacher  (via CSS) ..et non le supprimer finalement
 
         //Gestion des événéments des boutons Rechercher et Ajouter
-        
+   
         
     }
-
-
-    addTextBox()
-    {
-        //Création de balises pour Titre et Auteur du livre
-        let labelTitreLivre = document.createElement("p");
-        labelTitreLivre.innerText = "Titre du livre";
-        let titreLivre = document.createElement("INPUT");
-        titreLivre.setAttribute ("type", "text");
-        titreLivre.setAttribute ("name","titreLivre");
-
-        titreLivre.setAttribute("value","les misérables" );
-
-
-        let labelAuteurLivre = document.createElement("p");
-        labelAuteurLivre.innerText = "Auteur";
-        let auteurLivre = document.createElement("INPUT");
-        titreLivre.setAttribute ("type", "text");
-        titreLivre.setAttribute ("name","auteurLivre");
-    }
+  
 
     static generateTextBox(id,sLabel,valueDefault)
     {
@@ -195,11 +142,10 @@ class DOMManipulator
         let boutonLivre = document.createElement("button");
         boutonLivre.textContent=sLabel;
         boutonLivre.name=id;
-        boutonLivre.className=sClassName;
-        //boutonLivre.classList.add(sClassName);
+        //boutonLivre.className=sClassName;
+        boutonLivre.classList.add(sClassName);
             
-        console.log(boutonLivre);
-
+        //console.log(boutonLivre);
         boutonLivreParag.appendChild(boutonLivre);
 
         return boutonLivre;
@@ -223,78 +169,77 @@ class DOMManipulator
         lblTitre.innerHTML+="Titre : " + theBook.titre;
         lblTitre.classList.add("clsTitre");
                 
-        //Marquepage ..pas besoin de div finalement dans les  wrapper
-        //let divMarquepage = document.createElement("div");
-        //divMarquepage.classList.add("clsMarquepage");
         let btnMarquepage = document.createElement ("button");
-
+        btnMarquepage.classList.add("clsButtonGeneral");
         let objMarquepage = document.createElement("i");
         objMarquepage.classList.add("fa-solid", "fa-bookmark");
         objMarquepage.classList.add("clsMarquepage");
-        objMarquepage.setAttribute ("Id","idMarquepage");
+        //objMarquepage.setAttribute ("Id","idMarquepage");
        
-        //GEstion des événements
-        btnMarquepage.addEventListener("click", ajoutMarquepage);
+        
     
-
+        //Création des éléments de livre
         let lblIdentifiant = document.createElement("div");
         lblIdentifiant.innerHTML+="Id : " + theBook.identifiant;
         lblIdentifiant.classList.add("clsIdentifiant");
 
-
         let lblAuteur = document.createElement("div");
         lblAuteur.innerHTML+="Auteur : " + theBook.auteur;
         lblAuteur.classList.add("clsAuteur");
-
 
         let theDesc = theBook.description ? theBook.description.slice(0,200) : "Information manquante";
         let lblDescription = document.createElement("div");
         lblDescription.innerHTML+="Description : " +  theDesc;
         lblDescription.classList.add("clsDescription");
 
-
         let objImage = document.createElement("img");
         objImage.classList.add("clsImage");
         objImage.src = theBook.image ? theBook.image : "/images/unavailable.png" ;
      
+        /* let btnTrash = document.createElement ("button");
         let objTrash = document.createElement("i");
-        objTrash.classList.add("fa-solid", "fa-trash");
+        objTrash.classList.add("fa-solid", "fa-trash"); */
 
 
+        //Gestion des événements
+        btnMarquepage.addEventListener("click", ajoutMarquepage);
+        //btnTrash.addEventListener("click",suppressionLivre);
 
         //Présentation des éléments
-
-
-
-       
         lblTitreMarquepage.appendChild (lblTitre);
 
-      
-
-       
         btnMarquepage.appendChild(objMarquepage);
         lblTitreMarquepage.appendChild(btnMarquepage);
 
-
+               
         blocBook.appendChild(lblTitreMarquepage);
         blocBook.appendChild(lblIdentifiant);
         blocBook.appendChild(lblAuteur);
         blocBook.appendChild(lblDescription);
         blocBook.appendChild(objImage);
-        blocBook.appendChild(objTrash);
+        //blocBook.appendChild(btnTrash);
         console.log(" Le bloc" );
         console.log(blocBook);
 
 
-        //Les fonctions utilisées
+        //Les fonctions
+
+        //Ajout Marquepage
         function ajoutMarquepage()
         {
             console.log ("ajoutMarquepage" + idBook);
             //Stockage dans une session
             sessionStorage.setItem(idBook,JSON.stringify(theBook));
             console.log (JSON.parse(sessionStorage.getItem(idBook)));
+           // affichageMarquepage(idBook);
 
         }
+
+        //Liste des marques
+        /* function affichageMarquepage(theIdBook)
+        {
+
+        } */
         return blocBook;
     }
 
@@ -311,9 +256,6 @@ class DOMManipulator
         lblResultatRecherche.innerHTML += "Résultat de recherche";
         lblResultatRecherche.className = "clsLblResultatRecherche";
         
-        /* // Exemple ajouter ou supprimer plusieurs classes
-div.classList.add("foo", "bar", "baz");
-div.classList.remove("foo", "bar", "baz"); */
 
         let sectionResultat = document.createElement("section");
         sectionResultat.className = "clsSectionResultat";
@@ -329,9 +271,7 @@ div.classList.remove("foo", "bar", "baz"); */
             }
         }
         else {
-        //console.log ("Vpas de resultat de recherche");
-        sectionResultat.innerHTML += "Aucun livre n'a été trouvé";
-        
+            sectionResultat.innerHTML += "Aucun livre n'a été trouvé";
         }
 
         //positionnnemt des balises
@@ -339,57 +279,4 @@ div.classList.remove("foo", "bar", "baz"); */
         sectionNouveauLivre.insertBefore(sectionResultat,strContent);
         
     }
-
-    /* ajoutMarquepage()
-    {
-alert ("Test 1");
-    } */
-
-    
-    /* static affichageResultats (listBooks)
-    {
-        //
-        //console.log("Affichage reultalt:" + listBooks.length );
-        let sectionNouveauLivre = document.getElementById("myBooks");
-        let strContent = document.getElementById("content");
-
-        //On doit se postionner sur la page et afficher 
-        //let lblResultatRecherche = document.createElement("p");
-        let lblResultatRecherche = document.createElement("h2");
-        lblResultatRecherche.innerHTML += "Résultat de recherche";
-        lblResultatRecherche.className = "clsLblResultatRecherche";
-        
-        // Exemple ajouter ou supprimer plusieurs classes
-        //div.classList.add("foo", "bar", "baz");
-        //div.classList.remove("foo", "bar", "baz"); 
-
-        let sectionResultat = document.createElement("section");
-        sectionResultat.className = "clsSectionResultat";
-        //sectionResultat
-        for (let i=0; i<listBooks.length; i++)
-        {
-         // console.log(" ABCD :" + i );
-         let theBook = DOMManipulator.generateBloc(listBooks[i]);
-         sectionResultat.appendChild (theBook);
-        }
-
-
-        //positionnnemt des balises
-        sectionNouveauLivre.insertBefore(lblResultatRecherche,strContent);
-        sectionNouveauLivre.insertBefore(sectionResultat,strContent);
-        
-    } */
-
-    /* static affichageResultatsVide ()
-    {
-        let sectionNouveauLivre = document.getElementById("myBooks");
-        let strContent = document.getElementById("content");
-
-        let lblResultatRecherche = document.createElement("h2");
-        lblResultatRecherche.innerHTML += "Résultat de recherche";
-        lblResultatRecherche.className = "clsLblResultatRecherche";
-
-    } */
-
-
 }

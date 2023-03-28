@@ -26,9 +26,9 @@ h2 {
     display: block;
   margin-left: auto;
   margin-right: auto;
-    .clsButton__rechercher{
-        background:  rgb(255, 255, 130);
-        margin-left: 90%;
+    .clsButtonrechercher{
+        background:  rgb(255, 255, 120);
+        margin-left: 0px;
     }
       
 }
@@ -77,7 +77,10 @@ h2 {
 
 .clsBorderBook {
     border-style: solid;
-    border-width: 2px;
+    border-width: 1px;
+    background-color: darkgrey;
+    //border-radius: 10px;
+    margin: 10px;
 }
 
 .clsLblResultatRecherche{
@@ -99,7 +102,7 @@ h2 {
 
 .clsIdentifiant{
 text-align: left;
-font: italic 1em "sans-serif"; //Bcp de conditions pour utiliser font raccourci..cd site mdn mozilla
+font: italic bold 1em "sans-serif"; //Bcp de conditions pour utiliser font raccourci..cf site mdn mozilla
 margin-bottom: 5px;
 
 }
@@ -126,6 +129,7 @@ margin-bottom: 5px;
 
 .clsMarquepage{
     margin-left: auto;
+    margin-top: 1px;
     margin-right: 1px;
     color: v.$secondary-color;
 }
@@ -133,5 +137,26 @@ margin-bottom: 5px;
 .wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    background-color: v.$transparent-color;
     
+}
+
+.wrapperLigne {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    background-color: v.$transparent-color;
+    
+}
+.clsButtonGeneral {
+    text-align: right;
+    border-style: none;
+    background-color: v.$transparent-color;
+}
+
+.clsSectionResultat {
+    /* display: flex;
+    flex-wrap: wrap; */
+    display: grid;
+    grid-template-columns:1fr 1fr;
+    background-color: v.$transparent-color;
 }

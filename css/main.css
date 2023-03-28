@@ -23,9 +23,9 @@ h2 {
   margin-left: auto;
   margin-right: auto;
 }
-.clsButton .clsButton__rechercher {
-  background: rgb(255, 255, 130);
-  margin-left: 90%;
+.clsButton .clsButtonrechercher {
+  background: rgb(255, 255, 120);
+  margin-left: 0px;
 }
 
 .clsButton--orange {
@@ -69,7 +69,9 @@ h2 {
 } */
 .clsBorderBook {
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
+  background-color: darkgrey;
+  margin: 10px;
 }
 
 .clsLblResultatRecherche {
@@ -87,7 +89,7 @@ h2 {
 
 .clsIdentifiant {
   text-align: left;
-  font: italic 1em "sans-serif";
+  font: italic bold 1em "sans-serif";
   margin-bottom: 5px;
 }
 
@@ -112,6 +114,7 @@ h2 {
 
 .clsMarquepage {
   margin-left: auto;
+  margin-top: 1px;
   margin-right: 1px;
   color: #059340;
 }
@@ -119,6 +122,27 @@ h2 {
 .wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.wrapperLigne {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.clsButtonGeneral {
+  text-align: right;
+  border-style: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.clsSectionResultat {
+  /* display: flex;
+  flex-wrap: wrap; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 /*# sourceMappingURL=main.css.map */
