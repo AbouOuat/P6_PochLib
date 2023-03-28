@@ -74,26 +74,27 @@ class DOMManipulator
         //Ajout des boutons
         //Vendredi 17/02/2023
         //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
-        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton clsButton__rechercher2");
-        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
+        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton clsButton__rechercher2");
+        
+        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
+        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
+        sBoutonRechercher.classList.add("clsButtonrechercher");
 
         sBoutonRechercher.addEventListener("click", async function (){
             console.log ("Test");
             let googleBooksAPI = new GoogleBooksAPI();
             let titre = document.getElementById("titreLivre").value;
             let auteur = document.getElementById("auteurLivre").value;
-            console.log ("titre:" + titre + "auteur: "+ auteur);
+            console.log ("titre:" + titre + "  auteur: "+ auteur);
             let theGoogleResult = await googleBooksAPI.searchBooks (titre,auteur);
             console.log (theGoogleResult);
             let listBooks = [];
 
             if (theGoogleResult.items?.length > 0) //Si pas de retour, on ne rempli pas le tableau
             {
-
                 for (let i=0; i<theGoogleResult.items.length; i++)
                 {
                     listBooks.push(new Book (theGoogleResult.items[i]));
-
                 }
             }
                 //Affichage des resultats
@@ -208,7 +209,7 @@ class DOMManipulator
 
     static generateBloc(theBook)
     {
-
+        var idBook= theBook.identifiant;
         //Création d'un bloc contenant tous les éléments ci-dessous
         let blocBook = document.createElement("div");
         blocBook.classList.add("clsBorderBook");
@@ -225,9 +226,15 @@ class DOMManipulator
         //Marquepage ..pas besoin de div finalement dans les  wrapper
         //let divMarquepage = document.createElement("div");
         //divMarquepage.classList.add("clsMarquepage");
+        let btnMarquepage = document.createElement ("button");
+
         let objMarquepage = document.createElement("i");
-        objMarquepage.classList.add("fa-solid", "fa-bookmark");  /* <i class="fa-solid fa-bookmark"></i> */
+        objMarquepage.classList.add("fa-solid", "fa-bookmark");
         objMarquepage.classList.add("clsMarquepage");
+        objMarquepage.setAttribute ("Id","idMarquepage");
+       
+        //GEstion des événements
+        btnMarquepage.addEventListener("click", ajoutMarquepage);
     
 
         let lblIdentifiant = document.createElement("div");
@@ -249,25 +256,24 @@ class DOMManipulator
         let objImage = document.createElement("img");
         objImage.classList.add("clsImage");
         objImage.src = theBook.image ? theBook.image : "/images/unavailable.png" ;
-        //href=""
-        //objImage.alt = "Pas d'image pour ce resultat de recherche";
-        /* objImage.innerHTML+="Description : " +  theBook.image?.slice(0,200);
-        objImage.classList.add("clsImage"); */
-
-
-        //{/* <i class="fa-solid fa-trash"></i> */}
-
+     
         let objTrash = document.createElement("i");
         objTrash.classList.add("fa-solid", "fa-trash");
 
 
+
         //Présentation des éléments
 
-        //blocBook.appendChild(lblTitre);
+
+
+       
         lblTitreMarquepage.appendChild (lblTitre);
-       // divMarquepage.appendChild (objMarquepage);
-        //lblTitreMarquepage.appendChild(divMarquepage);
-        lblTitreMarquepage.appendChild(objMarquepage);
+
+      
+
+       
+        btnMarquepage.appendChild(objMarquepage);
+        lblTitreMarquepage.appendChild(btnMarquepage);
 
 
         blocBook.appendChild(lblTitreMarquepage);
@@ -278,6 +284,17 @@ class DOMManipulator
         blocBook.appendChild(objTrash);
         console.log(" Le bloc" );
         console.log(blocBook);
+
+
+        //Les fonctions utilisées
+        function ajoutMarquepage()
+        {
+            console.log ("ajoutMarquepage" + idBook);
+            //Stockage dans une session
+            sessionStorage.setItem(idBook,JSON.stringify(theBook));
+            console.log (JSON.parse(sessionStorage.getItem(idBook)));
+
+        }
         return blocBook;
     }
 
@@ -322,6 +339,11 @@ div.classList.remove("foo", "bar", "baz"); */
         sectionNouveauLivre.insertBefore(sectionResultat,strContent);
         
     }
+
+    /* ajoutMarquepage()
+    {
+alert ("Test 1");
+    } */
 
     
     /* static affichageResultats (listBooks)
