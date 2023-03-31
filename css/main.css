@@ -68,6 +68,13 @@ h2 {
     } 
 } */
 .clsBorderBook {
+  /* display: flex;
+  flex-wrap: wrap; */
+  max-width: 45%;
+  width: 45%;
+  padding: 1px;
+  box-sizing: content-box;
+  border: 2px solid #0e0e0e;
   border-style: solid;
   border-width: 1px;
   background-color: darkgrey;
@@ -105,11 +112,14 @@ h2 {
   margin-bottom: 5px;
 }
 
+.clsImageContent {
+  text-align: center;
+}
+
 .clsImage {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
   width: 50%;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .clsMarquepage {
@@ -138,10 +148,11 @@ h2 {
 }
 
 .clsSectionResultat {
-  /* display: flex;
-  flex-wrap: wrap; */
+  display: flex;
+  flex-wrap: wrap;
+  /*
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:1fr 1fr;*/
   background-color: rgba(0, 0, 0, 0);
 }
 

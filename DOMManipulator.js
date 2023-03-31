@@ -44,12 +44,12 @@ class DOMManipulator
        
 
 
-         //Ajout des zones de texte  .. A SUPPRIMER
+          //Ajout des zones de texte  .. A SUPPRIMER
          let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
 
 
-         /* let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les ZSZDZDZ");
+      /*    let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les ZSZDZDZ");
      
          let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo"); */
         
@@ -192,6 +192,8 @@ class DOMManipulator
         lblDescription.innerHTML+="Description : " +  theDesc;
         lblDescription.classList.add("clsDescription");
 
+        let lblImage = document.createElement("div");
+        lblImage.classList.add("clsImageContent");
         let objImage = document.createElement("img");
         objImage.classList.add("clsImage");
         objImage.src = theBook.image ? theBook.image : "/images/unavailable.png" ;
@@ -212,11 +214,13 @@ class DOMManipulator
         lblTitreMarquepage.appendChild(btnMarquepage);
 
                
+        lblImage.appendChild (objImage);
+
         blocBook.appendChild(lblTitreMarquepage);
         blocBook.appendChild(lblIdentifiant);
         blocBook.appendChild(lblAuteur);
         blocBook.appendChild(lblDescription);
-        blocBook.appendChild(objImage);
+        blocBook.appendChild(lblImage);
         //blocBook.appendChild(btnTrash);
         console.log(" Le bloc" );
         console.log(blocBook);
@@ -227,19 +231,32 @@ class DOMManipulator
         //Ajout Marquepage
         function ajoutMarquepage()
         {
-            console.log ("ajoutMarquepage" + idBook);
+            console.log ("ajoutMarquepage " + idBook);
             //Stockage dans une session
             sessionStorage.setItem(idBook,JSON.stringify(theBook));
             console.log (JSON.parse(sessionStorage.getItem(idBook)));
-           // affichageMarquepage(idBook);
+           affichageMarquepage(idBook);
 
         }
 
         //Liste des marques
-        /* function affichageMarquepage(theIdBook)
+        function affichageMarquepage(theIdBook)
         {
+            //Reconstituion de l'objet
+            console.log("affichageMarquepage");
+            console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
 
-        } */
+
+            //Copie vers ligne en dessous (MaPoche List)
+            /* const div1 = document.getElementById("div1");
+        const div1Paras = div1.getElementsByTagName("p"); */
+        let blsContent = document.getElementById("content");
+        let blsPochList = blsContent.getElementsByTagName("h2");
+        let blockBookfavoris = generateBloc(JSON.parse(sessionStorage.getItem(theIdBook)));
+
+            blsPochList.appendChild (blockBookfavoris);
+            //Remplacement du bouton marque page par bouton supprimer
+        }
         return blocBook;
     }
 
@@ -267,6 +284,11 @@ class DOMManipulator
             for (let i=0; i<listBooks.length; i++)
             {
                 let theBook = DOMManipulator.generateBloc(listBooks[i]);
+                /* console.log ("Avant call Book");
+                let theBook = Book.generateBlocLivre(listBooks[i]);
+                console.log ("Après call Book"); */
+                
+
                 sectionResultat.appendChild (theBook);
             }
         }
