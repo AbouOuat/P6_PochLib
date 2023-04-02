@@ -8,7 +8,7 @@ class DOMManipulator
         console.log ("Apres");
     } */
     
-    static addSearchButton()
+    static addAddButton()
     {
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strHR = document.getElementsByTagName("hr")[0]; //Crochet avec 0 pour prendre le premier hr
@@ -32,7 +32,7 @@ class DOMManipulator
     static insertFieldSearch (test)
     {
         // console.log(event);
-        console.log (test);
+        //console.log (test);
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strHR = document.getElementsByTagName("hr")[0]; //Crochet avec 0 pour prendre le premier hr
 
@@ -65,7 +65,7 @@ class DOMManipulator
         sBoutonRechercher.classList.add("clsButtonrechercher");
 
         sBoutonRechercher.addEventListener("click", async function (){
-            console.log ("Test");
+            console.log ("Test Click Rechercher");
             let googleBooksAPI = new GoogleBooksAPI();
             let titre = document.getElementById("titreLivre").value;
             let auteur = document.getElementById("auteurLivre").value;
@@ -153,116 +153,18 @@ class DOMManipulator
 
     }
 
-    static generateBloc(theBook)
-    {
-        var idBook= theBook.identifiant;
-        //Création d'un bloc contenant tous les éléments ci-dessous
-        let blocBook = document.createElement("div");
-        blocBook.classList.add("clsBorderBook");
-        
-
-        //Pour Titre et marque page.. on prend un wrapper pour diviser
-        let lblTitreMarquepage = document.createElement("div");
-        lblTitreMarquepage.classList.add("wrapper");
-        
-        let lblTitre = document.createElement("div");
-        lblTitre.innerHTML+="Titre : " + theBook.titre;
-        lblTitre.classList.add("clsTitre");
-                
-        let btnMarquepage = document.createElement ("button");
-        btnMarquepage.classList.add("clsButtonGeneral");
-        let objMarquepage = document.createElement("i");
-        objMarquepage.classList.add("fa-solid", "fa-bookmark");
-        objMarquepage.classList.add("clsMarquepage");
-        //objMarquepage.setAttribute ("Id","idMarquepage");
-       
-        
     
-        //Création des éléments de livre
-        let lblIdentifiant = document.createElement("div");
-        lblIdentifiant.innerHTML+="Id : " + theBook.identifiant;
-        lblIdentifiant.classList.add("clsIdentifiant");
+    static effaceResultats()
+    {
 
-        let lblAuteur = document.createElement("div");
-        lblAuteur.innerHTML+="Auteur : " + theBook.auteur;
-        lblAuteur.classList.add("clsAuteur");
-
-        let theDesc = theBook.description ? theBook.description.slice(0,200) : "Information manquante";
-        let lblDescription = document.createElement("div");
-        lblDescription.innerHTML+="Description : " +  theDesc;
-        lblDescription.classList.add("clsDescription");
-
-        let lblImage = document.createElement("div");
-        lblImage.classList.add("clsImageContent");
-        let objImage = document.createElement("img");
-        objImage.classList.add("clsImage");
-        objImage.src = theBook.image ? theBook.image : "/images/unavailable.png" ;
-     
-        /* let btnTrash = document.createElement ("button");
-        let objTrash = document.createElement("i");
-        objTrash.classList.add("fa-solid", "fa-trash"); */
-
-
-        //Gestion des événements
-        btnMarquepage.addEventListener("click", ajoutMarquepage);
-        //btnTrash.addEventListener("click",suppressionLivre);
-
-        //Présentation des éléments
-        lblTitreMarquepage.appendChild (lblTitre);
-
-        btnMarquepage.appendChild(objMarquepage);
-        lblTitreMarquepage.appendChild(btnMarquepage);
-
-               
-        lblImage.appendChild (objImage);
-
-        blocBook.appendChild(lblTitreMarquepage);
-        blocBook.appendChild(lblIdentifiant);
-        blocBook.appendChild(lblAuteur);
-        blocBook.appendChild(lblDescription);
-        blocBook.appendChild(lblImage);
-        //blocBook.appendChild(btnTrash);
-        console.log(" Le bloc" );
-        console.log(blocBook);
-
-
-        //Les fonctions
-
-        //Ajout Marquepage
-        function ajoutMarquepage()
-        {
-            console.log ("ajoutMarquepage " + idBook);
-            //Stockage dans une session
-            sessionStorage.setItem(idBook,JSON.stringify(theBook));
-            console.log (JSON.parse(sessionStorage.getItem(idBook)));
-           affichageMarquepage(idBook);
-
-        }
-
-        //Liste des marques
-        function affichageMarquepage(theIdBook)
-        {
-            //Reconstituion de l'objet
-            console.log("affichageMarquepage");
-            console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
-
-
-            //Copie vers ligne en dessous (MaPoche List)
-            /* const div1 = document.getElementById("div1");
-        const div1Paras = div1.getElementsByTagName("p"); */
-        let blsContent = document.getElementById("content");
-        let blsPochList = blsContent.getElementsByTagName("h2");
-        let blockBookfavoris = generateBloc(JSON.parse(sessionStorage.getItem(theIdBook)));
-
-            blsPochList.appendChild (blockBookfavoris);
-            //Remplacement du bouton marque page par bouton supprimer
-        }
-        return blocBook;
     }
-
     static affichageResultats (listBooks)
     {
-        //
+        /* On crée ici 
+        la section qui contiendra les résultats
+        la section qui contiendra l'ajout des bookmark (marquage) en même temps
+        */
+
         //console.log("Affichage reultalt:" + listBooks.length );
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strContent = document.getElementById("content");
@@ -277,16 +179,18 @@ class DOMManipulator
         let sectionResultat = document.createElement("section");
         sectionResultat.className = "clsSectionResultat";
 
+
+
         if (listBooks.length > 0)
         {
             console.log ("Nombrede res:"+listBooks.length);
             //sectionResultat
             for (let i=0; i<listBooks.length; i++)
             {
-                let theBook = DOMManipulator.generateBloc(listBooks[i]);
-                /* console.log ("Avant call Book");
-                let theBook = Book.generateBlocLivre(listBooks[i]);
-                console.log ("Après call Book"); */
+                
+                console.log ("Avant call Book");
+                let theBook = Book.generateBlocLivre(listBooks[i],"marquePage");
+                console.log ("Après call Book");
                 
 
                 sectionResultat.appendChild (theBook);

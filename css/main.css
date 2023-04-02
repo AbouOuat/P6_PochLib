@@ -150,8 +150,7 @@ h2 {
 .clsSectionResultat {
   display: flex;
   flex-wrap: wrap;
-  /*
-  display: grid;
+  /* display: grid;
   grid-template-columns:1fr 1fr;*/
   background-color: rgba(0, 0, 0, 0);
 }

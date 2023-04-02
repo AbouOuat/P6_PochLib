@@ -1,5 +1,7 @@
 class Book
 {
+    static staticMarquePage = "marquePage";
+    static staticTrash = "corbeille";
     constructor(googleResponseItem)
     {
         this.identifiant = googleResponseItem.id;
@@ -31,7 +33,7 @@ class Book
         */   
     }  
 
-    static generateBlocLivre(theBook)
+    static generateBlocLivre(theBook, isMarquepage)
     {
         var idBook= theBook.identifiant;
         //Création d'un bloc contenant tous les éléments ci-dessous
@@ -46,14 +48,23 @@ class Book
         let lblTitre = document.createElement("div");
         lblTitre.innerHTML+="Titre : " + theBook.titre;
         lblTitre.classList.add("clsTitre");
-                
-        let btnMarquepage = document.createElement ("button");
-        btnMarquepage.classList.add("clsButtonGeneral");
-        let objMarquepage = document.createElement("i");
-        objMarquepage.classList.add("fa-solid", "fa-bookmark");
-        objMarquepage.classList.add("clsMarquepage");
-        //objMarquepage.setAttribute ("Id","idMarquepage");
-       
+        
+        let btnMarquepageTrash;
+        let objMarquepageTrash;
+        if (isMarquepage=="marquePage"){
+            btnMarquepageTrash = document.createElement ("button");
+            btnMarquepageTrash.classList.add("clsButtonGeneral");
+            objMarquepageTrash = document.createElement("i");
+            objMarquepageTrash.classList.add("fa-solid", "fa-bookmark");
+            objMarquepageTrash.classList.add("clsMarquepage");
+            //objMarquepageTrash.setAttribute ("Id","idMarquepage");
+        } else{
+            btnMarquepageTrash = document.createElement ("button");
+            btnMarquepageTrash.classList.add("clsButtonGeneral");
+            objMarquepageTrash = document.createElement("i");
+            objMarquepageTrash.classList.add("fa-solid", "fa-trash");
+            objMarquepageTrash.classList.add("clsMarquepage");
+        }
         
     
         //Création des éléments de livre
@@ -82,14 +93,20 @@ class Book
 
 
         //Gestion des événements
-        btnMarquepage.addEventListener("click", ajoutMarquepage);
+        //btnMarquepageTrash.addEventListener("click", ajoutMarquepageTrash);
+        btnMarquepageTrash.addEventListener("click", function ()
+        {
+            if (isMarquepage == Book.staticMarquePage)
+            ajoutMarquepageTrash(isMarquepage);
+        }
+        );
         //btnTrash.addEventListener("click",suppressionLivre);
 
         //Présentation des éléments
         lblTitreMarquepage.appendChild (lblTitre);
 
-        btnMarquepage.appendChild(objMarquepage);
-        lblTitreMarquepage.appendChild(btnMarquepage);
+        btnMarquepageTrash.appendChild(objMarquepageTrash);
+        lblTitreMarquepage.appendChild(btnMarquepageTrash);
 
                
         lblImage.appendChild (objImage);
@@ -107,9 +124,10 @@ class Book
         //Les fonctions
 
         //Ajout Marquepage
-        function ajoutMarquepage()
+        function ajoutMarquepageTrash(isMarquepage)
         {
-            console.log ("ajoutMarquepage " + idBook);
+            console.log ("ajoutMarquepageTrash " + idBook);
+            console.log ("Marquepavalue:" + isMarquepage);
             //Stockage dans une session
             sessionStorage.setItem(idBook,JSON.stringify(theBook));
             console.log (JSON.parse(sessionStorage.getItem(idBook)));
@@ -124,17 +142,56 @@ class Book
             console.log("affichageMarquepage");
             console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
 
+            let sectionMarquepage;
+            if (document.getElementsByName("sectionMarquepageName").length > 0)
+            {
+                console.log (" Dans la sacrion: " + document.getElementsByName("sectionMarquepageName").length);
+                sectionMarquepage = document.getElementsByName("sectionMarquepageName")[0];
+            }
+            else {
+                sectionMarquepage = document.createElement("section");
+                sectionMarquepage.className = "clsSectionResultat";
+                console.log (" Dans la sacrion AAAA"); 
+                sectionMarquepage.setAttribute("name","sectionMarquepageName");
+                console.log (" Dans la sacrion AAAA B"); 
+
+                let blsContent = document.getElementById("content");
+                blsContent.appendChild (sectionMarquepage);
+                
+
+            }
+            
 
             //Copie vers ligne en dessous (MaPoche List)
             /* const div1 = document.getElementById("div1");
-        const div1Paras = div1.getElementsByTagName("p"); */
-        let blsContent = document.getElementById("content");
-        let blsPochList = blsContent.getElementsByTagName("h2");
-        let blockBookfavoris = generateBloc(JSON.parse(sessionStorage.getItem(theIdBook)));
+            const div1Paras = div1.getElementsByTagName("p"); */
+            
+            /* let blsContent = document.getElementById("content");
+            let blsPochList = blsContent.getElementsByTagName("h2"); */
+            let blockBookfavoris = Book.generateBlocLivre(JSON.parse(sessionStorage.getItem(theIdBook)),"");
+            //console.log(" Nb Element: "+ blsPochList.length);
+            
+            //blsContent.appendChild (blockBookfavoris);
 
-            blsPochList.appendChild (blockBookfavoris);
+
+            console.log ("Avant A");
+            sectionMarquepage.appendChild(blockBookfavoris);
+            console.log ("Avant B");
+            //blsPochList.appendChild
             //Remplacement du bouton marque page par bouton supprimer
         }
+
+        /* function isSectionMarquepage ()
+        {
+            let blsContent = document.getElementById("content");
+            let blsPochList = blsContent.getElementsByTagName("h2");
+            let sectionMarquepage;
+            if (document.getElementsByName("sectionMarquepageName"))
+            {
+                    console.log (" Dans la sacrion");
+            } else {console.log (" Dans la sacrion AAAA"); }
+
+        } */
         return blocBook;
     }
 }
