@@ -147,25 +147,30 @@ class Book
                 console.log ("Marquepavalue IN:" + isMarquepage);
                 // Si ajout marquepage, 
                 //alors on check si ça existe, si oui alors on affiche msg..
-                //if (
-                    sessionStorage.getItem(idBook)?console.log ("Déja ajoute"): console.log ("Non ajouté");
-                    //)
-
-                //Si ça existe pas alors on ajoute
-                //Stockage dans une session
-                sessionStorage.setItem(idBook,JSON.stringify(theBook));
-                console.log (JSON.parse(sessionStorage.getItem(idBook)));
-                affichageMarquepage(idBook);
+               
+                sessionStorage.getItem(idBook)?console.log ("Déja ajoute"): console.log ("Non ajouté");
+                //sessionStorage.getItem(idBook)?Book.affichageMessage("Vous ne pouvez ajouter deux fois le même livre"):"";
+                
+                if (sessionStorage.getItem(idBook)!= null)
+                {
+                    console.log ("Dans déja ajouté");
+                    Book.affichageMessage("Vous ne pouvez ajouter deux fois le même livre");
+                } else
+                {
+                    console.log ("Dans Pas encore ajouté");
+                    //Si ça existe pas alors on ajoute
+                    //Stockage dans une session
+                    sessionStorage.setItem(idBook,JSON.stringify(theBook));
+                    console.log (JSON.parse(sessionStorage.getItem(idBook)));
+                    affichageMarquepage(idBook);
+                }
             }
             else {
                 console.log ("on supprime :" + isMarquepage + " id de :  " + idBook);
                 sessionStorage.removeItem(idBook);
                 document.getElementsByName("sectionMarquepageName")[0].removeChild(document.getElementsByName(idBook)[1]);
                 //document.getElementsByName(idBook)[1].innerHTML="";
-                console.log ("Suppression faite");
-                //Vider la DIV assciée ? Depuis la position actuelle...
-
-
+                console.log ("Suppression faite");                
             }
 
            //Si suppression trask, alors on supprime
@@ -195,12 +200,7 @@ class Book
             }
             
 
-            //Copie vers ligne en dessous (MaPoche List)
-            /* const div1 = document.getElementById("div1");
-            const div1Paras = div1.getElementsByTagName("p"); */
-            
-            /* let blsContent = document.getElementById("content");
-            let blsPochList = blsContent.getElementsByTagName("h2"); */
+        
             let blockBookfavoris = Book.generateBlocLivre(JSON.parse(sessionStorage.getItem(theIdBook)),"");
       
             
@@ -212,17 +212,27 @@ class Book
            
         }
 
-        /* function isSectionMarquepage ()
-        {
-            let blsContent = document.getElementById("content");
-            let blsPochList = blsContent.getElementsByTagName("h2");
-            let sectionMarquepage;
-            if (document.getElementsByName("sectionMarquepageName"))
-            {
-                    console.log (" Dans la sacrion");
-            } else {console.log (" Dans la sacrion AAAA"); }
 
-        } */
+       
         return blocBook;
+    }
+
+    static affichageMessage (strMessage)
+    {
+        var lblMessage = document.createElement("div");
+        lblMessage.setAttribute ("id","snackbar");
+        lblMessage.innerHTML += strMessage;
+        lblMessage.classList.add("show");
+        document.getElementById("content").appendChild(lblMessage);
+        console.log(strMessage);
+        console.log(" le mesage " + strMessage);
+        setTimeout(function(){ lblMessage.className = lblMessage.className.replace("show", ""); }, 3000);
+        console.log (" Après le mesdsage");
+
+       /*  { <div id="snackbar">Some text some message..</div>
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000); } */
+
     }
 }

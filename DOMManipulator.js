@@ -154,10 +154,6 @@ class DOMManipulator
     }
 
     
-    static effaceResultats()
-    {
-
-    }
     static affichageResultats (listBooks)
     {
         /* On crée ici 
