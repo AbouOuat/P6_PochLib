@@ -33,6 +33,7 @@ class Book
         */   
     }  
 
+    //si isMarquepage est renseigné alors on ajoute icone "marquepage", sinon c'est "corbeille"
     static generateBlocLivre(theBook, isMarquepage)
     {
         var idBook= theBook.identifiant;
@@ -40,6 +41,8 @@ class Book
         let blocBook = document.createElement("div");
         blocBook.classList.add("clsBorderBook");
         
+        // on ajoute un nom pour après pouvoir le supprimer
+        blocBook.setAttribute ("name",idBook);
 
         //Pour Titre et marque page.. on prend un wrapper pour diviser
         let lblTitreMarquepage = document.createElement("div");
@@ -93,22 +96,33 @@ class Book
 
 
         //Gestion des événements
-        //btnMarquepageTrash.addEventListener("click", ajoutMarquepageTrash);
+        //btnMarquepageTrash.addEventListener("click", ajoutSuppressionMarquepageTrash);
         btnMarquepageTrash.addEventListener("click", function ()
         {
-            if (isMarquepage == Book.staticMarquePage)
-            ajoutMarquepageTrash(isMarquepage);
+            //Marquepage
+            /* if (isMarquepage == Book.staticMarquePage)
+            { */
+                ajoutSuppressionMarquepageTrash(isMarquepage,idBook);
+             /*    //Si c'est déjà ajouté, on ajoute un texte ?
+
+            } else{  //Corbeille
+
+            } */
+
+
         }
         );
         //btnTrash.addEventListener("click",suppressionLivre);
 
         //Présentation des éléments
-        lblTitreMarquepage.appendChild (lblTitre);
+
 
         btnMarquepageTrash.appendChild(objMarquepageTrash);
+
+        lblTitreMarquepage.appendChild (lblTitre);
         lblTitreMarquepage.appendChild(btnMarquepageTrash);
 
-               
+        
         lblImage.appendChild (objImage);
 
         blocBook.appendChild(lblTitreMarquepage);
@@ -124,21 +138,45 @@ class Book
         //Les fonctions
 
         //Ajout Marquepage
-        function ajoutMarquepageTrash(isMarquepage)
+        function ajoutSuppressionMarquepageTrash(isMarquepage,idBook)
         {
-            console.log ("ajoutMarquepageTrash " + idBook);
+            console.log ("ajoutSuppressionMarquepageTrash " + idBook);
             console.log ("Marquepavalue:" + isMarquepage);
-            //Stockage dans une session
-            sessionStorage.setItem(idBook,JSON.stringify(theBook));
-            console.log (JSON.parse(sessionStorage.getItem(idBook)));
-           affichageMarquepage(idBook);
+
+            if (isMarquepage == Book.staticMarquePage) {
+                console.log ("Marquepavalue IN:" + isMarquepage);
+                // Si ajout marquepage, 
+                //alors on check si ça existe, si oui alors on affiche msg..
+                //if (
+                    sessionStorage.getItem(idBook)?console.log ("Déja ajoute"): console.log ("Non ajouté");
+                    //)
+
+                //Si ça existe pas alors on ajoute
+                //Stockage dans une session
+                sessionStorage.setItem(idBook,JSON.stringify(theBook));
+                console.log (JSON.parse(sessionStorage.getItem(idBook)));
+                affichageMarquepage(idBook);
+            }
+            else {
+                console.log ("on supprime :" + isMarquepage + " id de :  " + idBook);
+                sessionStorage.removeItem(idBook);
+                document.getElementsByName("sectionMarquepageName")[0].removeChild(document.getElementsByName(idBook)[1]);
+                //document.getElementsByName(idBook)[1].innerHTML="";
+                console.log ("Suppression faite");
+                //Vider la DIV assciée ? Depuis la position actuelle...
+
+
+            }
+
+           //Si suppression trask, alors on supprime
+
 
         }
 
         //Liste des marques
         function affichageMarquepage(theIdBook)
         {
-            //Reconstituion de l'objet
+            //Creation de section pour afficher
             console.log("affichageMarquepage");
             console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
 
@@ -151,14 +189,9 @@ class Book
             else {
                 sectionMarquepage = document.createElement("section");
                 sectionMarquepage.className = "clsSectionResultat";
-                console.log (" Dans la sacrion AAAA"); 
                 sectionMarquepage.setAttribute("name","sectionMarquepageName");
-                console.log (" Dans la sacrion AAAA B"); 
-
                 let blsContent = document.getElementById("content");
                 blsContent.appendChild (sectionMarquepage);
-                
-
             }
             
 
@@ -169,16 +202,14 @@ class Book
             /* let blsContent = document.getElementById("content");
             let blsPochList = blsContent.getElementsByTagName("h2"); */
             let blockBookfavoris = Book.generateBlocLivre(JSON.parse(sessionStorage.getItem(theIdBook)),"");
-            //console.log(" Nb Element: "+ blsPochList.length);
+      
             
             //blsContent.appendChild (blockBookfavoris);
 
 
-            console.log ("Avant A");
+         
             sectionMarquepage.appendChild(blockBookfavoris);
-            console.log ("Avant B");
-            //blsPochList.appendChild
-            //Remplacement du bouton marque page par bouton supprimer
+           
         }
 
         /* function isSectionMarquepage ()
