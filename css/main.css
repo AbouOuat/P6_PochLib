@@ -67,6 +67,10 @@ h2 {
        align-items: center;
     } 
 } */
+.clsSectionRecherche {
+  text-align: left;
+}
+
 .clsBorderBook {
   /* display: flex;
   flex-wrap: wrap; */
@@ -153,6 +157,13 @@ h2 {
   /* display: grid;
   grid-template-columns:1fr 1fr;*/
   background-color: rgba(0, 0, 0, 0);
+}
+
+.clsInput {
+  width: 100%;
+  width: -moz-available; /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  width: fill-available;
 }
 
 #snackbar {

@@ -1,12 +1,8 @@
 class DOMManipulator
 {
     
-    /* constructor ()
-    { 
-        console.log ("Avant");
-        addSearchButton;
-        console.log ("Apres");
-    } */
+     constructor ()
+    { }
     
     static addAddButton()
     {
@@ -36,9 +32,12 @@ class DOMManipulator
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strHR = document.getElementsByTagName("hr")[0]; //Crochet avec 0 pour prendre le premier hr
 
+        //Section avec la zone de recherche
+        let sectionRecherche = document.createElement("section");
+        sectionRecherche.classList.add("clsSectionRecherche");
+
         /* //Ajout des zones de texte    COMMENTAIRES A DECOMMENTER
         let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre");
-        
         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur");
         */
        
@@ -63,9 +62,7 @@ class DOMManipulator
         let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
         //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
         sBoutonRechercher.classList.add("clsButtonrechercher");
-
         sBoutonRechercher.addEventListener("click", async function (){
-            console.log ("Test Click Rechercher");
             let googleBooksAPI = new GoogleBooksAPI();
             let titre = document.getElementById("titreLivre").value;
             let auteur = document.getElementById("auteurLivre").value;
@@ -97,21 +94,33 @@ class DOMManipulator
 
         let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--orange");
         //Sur click de Annuler , ondoit réafficher les elments via css  (notamment).
+        //sBoutonAnnuler.addEventListener("click", )
 
 
         //let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--test1");
 
         //Insertion dans le DOM
-        sectionNouveauLivre.insertBefore (sTitreLivreTextBox,strHR);
+        /* sectionNouveauLivre.insertBefore (sTitreLivreTextBox,strHR);
         sectionNouveauLivre.insertBefore (sAuteurLivreTextBox, strHR);
 
         sectionNouveauLivre.insertBefore (sBoutonRechercher,strHR);
         sectionNouveauLivre.insertBefore (sDiv,strHR);
-        sectionNouveauLivre.insertBefore (sBoutonAnnuler, strHR);
+        sectionNouveauLivre.insertBefore (sBoutonAnnuler, strHR); */
+
+
+        sectionRecherche.appendChild (sTitreLivreTextBox);
+        sectionRecherche.appendChild (sAuteurLivreTextBox);
+
+        sectionRecherche.appendChild (sBoutonRechercher);
+        sectionRecherche.appendChild (sDiv);
+        sectionRecherche.appendChild (sBoutonAnnuler);
+
+        sectionNouveauLivre.insertBefore(sectionRecherche,strHR);
 
         //On supprime le bouton sur lequel on a cliqué
         event.target.parentNode.removeChild(event.target);
         //A modifier , on doit le cacher  (via CSS) ..et non le supprimer finalement
+       
 
         //Gestion des événéments des boutons Rechercher et Ajouter
    
@@ -124,28 +133,37 @@ class DOMManipulator
          let labelTitreLivre = document.createElement("p");
         labelTitreLivre.innerText = sLabel;
         
+        let boutonBr = document.createElement("br");
+        let divFormat = document.createElement("div");
+        
         let titreLivre = document.createElement("INPUT");
         titreLivre.setAttribute ("type", "text");
         titreLivre.setAttribute ("name",id);
         titreLivre.setAttribute ("id",id);
         titreLivre.setAttribute ("value",valueDefault);
+        titreLivre.setAttribute ("class","clsInput");
+       
 
+        divFormat.appendChild (titreLivre);
+        labelTitreLivre.appendChild (boutonBr);
+        labelTitreLivre.appendChild(divFormat);
+      /* labelTitreLivre.appendChild (boutonBr);
         labelTitreLivre.appendChild(titreLivre);
-        //console.log(labelTitreLivre);
+       */
         return labelTitreLivre;
 
     }
 
     static generateButton(id,sLabel,sClassName)
     {
-        let boutonLivreParag = document.createElement("p");
+        let boutonLivreParag = document.createElement("div");
+        let boutonBr = document.createElement("br");
         let boutonLivre = document.createElement("button");
         boutonLivre.textContent=sLabel;
         boutonLivre.name=id;
         //boutonLivre.className=sClassName;
         boutonLivre.classList.add(sClassName);
-            
-        //console.log(boutonLivre);
+        boutonLivreParag.appendChild(boutonBr);    
         boutonLivreParag.appendChild(boutonLivre);
 
         return boutonLivre;
@@ -156,22 +174,18 @@ class DOMManipulator
     
     static affichageResultats (listBooks)
     {
-        /* On crée ici 
+        /* 
         la section qui contiendra les résultats
         la section qui contiendra l'ajout des bookmark (marquage) en même temps
         */
 
-        //console.log("Affichage reultalt:" + listBooks.length );
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strContent = document.getElementById("content");
 
-        //On doit se postionner sur la page et afficher 
-        //let lblResultatRecherche = document.createElement("p");
         let lblResultatRecherche = document.createElement("h2");
         lblResultatRecherche.innerHTML += "Résultat de recherche";
         lblResultatRecherche.className = "clsLblResultatRecherche";
         
-
         let sectionResultat = document.createElement("section");
         sectionResultat.className = "clsSectionResultat";
 
@@ -183,13 +197,9 @@ class DOMManipulator
             //sectionResultat
             for (let i=0; i<listBooks.length; i++)
             {
-                
-                console.log ("Avant call Book");
                 let theBook = Book.generateBlocLivre(listBooks[i],"marquePage");
                 console.log ("Après call Book");
-                
-
-                sectionResultat.appendChild (theBook);
+               sectionResultat.appendChild (theBook);
             }
         }
         else {

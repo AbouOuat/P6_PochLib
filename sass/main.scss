@@ -75,6 +75,9 @@ h2 {
 } */
 //On n'a pas pu mutualiser les couleurs, du coup on a fait plusieurs block
 
+.clsSectionRecherche {
+    text-align: left;
+}
 .clsBorderBook {
 
     /* display: flex;
@@ -176,6 +179,13 @@ margin-bottom: 5px;
     grid-template-columns:1fr 1fr;*/
 
     background-color: v.$transparent-color;
+}
+
+.clsInput{
+    width: 100%;
+    width: -moz-available;          /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    width: fill-available;
 }
 
 //Ajout message pour favoris déjà présent
