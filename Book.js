@@ -10,11 +10,7 @@ class Book
         this.description = googleResponseItem.searchInfo?.textSnippet;
         this.image = googleResponseItem.volumeInfo?.imageLinks?.thumbnail;
 
-        //Affiche et Local Storage
-        //Création livre à partir du DOMManiplator
-        //grid en css..
-
-        /* console.log ("---");
+         /* console.log ("---");
         console.log (this);  //Objet JAvaScript
         console.log (googleResponseItem); // Objet JAvascript de la reponse
         console.log (JSON.stringify(this));  //JSON
@@ -24,12 +20,11 @@ class Book
         /* sessionStorage.setItem(this.identifiant,JSON.stringify(this));
         console.log (JSON.parse(sessionStorage.getItem(this.identifiant))); */
 
-        //console.log ("Affichage de la session");
+   
 
         /* console.log (sessionStorage.getItem(googleResponseItem.id));
-        console.log ("AAA");
-        console.log (sessionStorage.getItem(googleResponseItem.id).identifiant);
-        console.log ("Fin affichage de la session A");
+           console.log (sessionStorage.getItem(googleResponseItem.id).identifiant);
+     
         */   
     }  
 
@@ -90,33 +85,25 @@ class Book
         objImage.classList.add("clsImage");
         objImage.src = theBook.image ? theBook.image : "/images/unavailable.png" ;
      
-        /* let btnTrash = document.createElement ("button");
-        let objTrash = document.createElement("i");
-        objTrash.classList.add("fa-solid", "fa-trash"); */
-
-
+    
         //Gestion des événements
         //btnMarquepageTrash.addEventListener("click", ajoutSuppressionMarquepageTrash);
         btnMarquepageTrash.addEventListener("click", function ()
-        {
-            //Marquepage
-            /* if (isMarquepage == Book.staticMarquePage)
-            { */
-                ajoutSuppressionMarquepageTrash(isMarquepage,idBook);
-             /*    //Si c'est déjà ajouté, on ajoute un texte ?
+            {
+                //Marquepage
+                /* if (isMarquepage == Book.staticMarquePage)
+                { */
+                    ajoutSuppressionMarquepageTrash(isMarquepage,idBook);
+                /*    //Si c'est déjà ajouté, on ajoute un texte ?
 
-            } else{  //Corbeille
+                } else{  //Corbeille
 
-            } */
-
-
-        }
+                } */
+            }
         );
         //btnTrash.addEventListener("click",suppressionLivre);
 
         //Présentation des éléments
-
-
         btnMarquepageTrash.appendChild(objMarquepageTrash);
 
         lblTitreMarquepage.appendChild (lblTitre);
@@ -172,10 +159,6 @@ class Book
                 //document.getElementsByName(idBook)[1].innerHTML="";
                 console.log ("Suppression faite");                
             }
-
-           //Si suppression trask, alors on supprime
-
-
         }
 
         //Liste des marques
@@ -196,24 +179,16 @@ class Book
                 sectionMarquepage.className = "clsSectionResultat";
                 sectionMarquepage.setAttribute("name","sectionMarquepageName");
                 let blsContent = document.getElementById("content");
-                blsContent.appendChild (sectionMarquepage);
+                //blsContent.appendChild (sectionMarquepage);
+                document.getElementById("myBooks").insertBefore (sectionMarquepage,blsContent.nextSibling);
             }
-            
-
-        
+                 
             let blockBookfavoris = Book.generateBlocLivre(JSON.parse(sessionStorage.getItem(theIdBook)),"");
-      
-            
+                 
             //blsContent.appendChild (blockBookfavoris);
-
-
-         
             sectionMarquepage.appendChild(blockBookfavoris);
            
         }
-
-
-       
         return blocBook;
     }
 
@@ -227,7 +202,7 @@ class Book
         console.log(strMessage);
         console.log(" le mesage " + strMessage);
         setTimeout(function(){ lblMessage.className = lblMessage.className.replace("show", ""); }, 3000);
-        console.log (" Après le mesdsage");
+        console.log (" Après le messsage");
 
        /*  { <div id="snackbar">Some text some message..</div>
         var x = document.getElementById("snackbar");

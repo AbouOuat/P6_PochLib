@@ -1,7 +1,7 @@
 class DOMManipulator
 {
     
-     constructor ()
+    constructor ()
     { }
     
     static addAddButton()
@@ -35,14 +35,13 @@ class DOMManipulator
         //Section avec la zone de recherche
         let sectionRecherche = document.createElement("section");
         sectionRecherche.classList.add("clsSectionRecherche");
+        sectionRecherche.setAttribute("name","sectionRechercheName");
 
         /* //Ajout des zones de texte    COMMENTAIRES A DECOMMENTER
         let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre");
         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur");
         */
        
-
-
           //Ajout des zones de texte  .. A SUPPRIMER
          let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
@@ -63,6 +62,16 @@ class DOMManipulator
         //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
         sBoutonRechercher.classList.add("clsButtonrechercher");
         sBoutonRechercher.addEventListener("click", async function (){
+
+            
+            //Vider la session
+            sessionStorage.clear();
+            
+            //Vide le contenu des sections resultat et marquepage
+            DOMManipulator.videSectionResultat();
+            DOMManipulator.videSectionMarquepage();
+
+            //Lance la recherche
             let googleBooksAPI = new GoogleBooksAPI();
             let titre = document.getElementById("titreLivre").value;
             let auteur = document.getElementById("auteurLivre").value;
@@ -94,7 +103,7 @@ class DOMManipulator
 
         let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--orange");
         //Sur click de Annuler , ondoit réafficher les elments via css  (notamment).
-        //sBoutonAnnuler.addEventListener("click", )
+        sBoutonAnnuler.addEventListener("click",DOMManipulator.annulerRechercheMarquepage);
 
 
         //let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--test1");
@@ -118,13 +127,13 @@ class DOMManipulator
         sectionNouveauLivre.insertBefore(sectionRecherche,strHR);
 
         //On supprime le bouton sur lequel on a cliqué
-        event.target.parentNode.removeChild(event.target);
+        //event.target.parentNode.removeChild(event.target);
         //A modifier , on doit le cacher  (via CSS) ..et non le supprimer finalement
-       
+        //ajoutLivre
+        document.getElementsByName("ajoutLivre")[0].style.display ='none';
+        //input.style.display = 'none';
+        //event.target.parentNode.removeChild(event.target);
 
-        //Gestion des événéments des boutons Rechercher et Ajouter
-   
-        
     }
   
 
@@ -171,7 +180,7 @@ class DOMManipulator
 
     }
 
-    
+     
     static affichageResultats (listBooks)
     {
         /* 
@@ -182,13 +191,22 @@ class DOMManipulator
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strContent = document.getElementById("content");
 
+        let sectionResultatEtFavoris = document.createElement("section");
+        sectionResultatEtFavoris.className = "clsSectionResultatEtLbl";
+        sectionResultatEtFavoris.setAttribute("name","sectionResultatEtLblName");
+
+        let divResultatRecherche = document.createElement("div");
         let lblResultatRecherche = document.createElement("h2");
         lblResultatRecherche.innerHTML += "Résultat de recherche";
         lblResultatRecherche.className = "clsLblResultatRecherche";
         
         let sectionResultat = document.createElement("section");
         sectionResultat.className = "clsSectionResultat";
+        divResultatRecherche.appendChild (lblResultatRecherche);
 
+        sectionResultatEtFavoris.appendChild (divResultatRecherche);
+        sectionResultatEtFavoris.appendChild (sectionResultat);
+        //sectionResultat.appendChild (divResultatRecherche);
 
 
         if (listBooks.length > 0)
@@ -207,8 +225,55 @@ class DOMManipulator
         }
 
         //positionnnemt des balises
-        sectionNouveauLivre.insertBefore(lblResultatRecherche,strContent);
-        sectionNouveauLivre.insertBefore(sectionResultat,strContent);
+
+        sectionNouveauLivre.insertBefore(sectionResultatEtFavoris,strContent);
         
+        //sectionNouveauLivre.insertBefore(sectionResultat,strContent);
+        /* sectionNouveauLivre.insertBefore(lblResultatRecherche,strContent);
+        sectionNouveauLivre.insertBefore(sectionResultat,strContent); */
+        
+    }
+
+
+    static annulerRechercheMarquepage()
+    {
+        //Vider la session
+        sessionStorage.clear();
+
+        DOMManipulator.videSectionRecherche();
+        DOMManipulator.videSectionResultat();
+        DOMManipulator.videSectionMarquepage();
+
+        document.getElementsByName("ajoutLivre")[0].style.display ='block';
+        /* //Su^pprimer le contenu
+        if (document.getElementsByName("sectionRechercheName").length>0) {
+        document.getElementById("myBooks").removeChild(document.getElementsByName("sectionRechercheName")[0]);
+        }
+        if (document.getElementsByName("sectionResultatEtLblName").length> 0) {
+        document.getElementById("myBooks").removeChild(document.getElementsByName("sectionResultatEtLblName")[0]); 
+        }
+        if (document.getElementsByName("sectionMarquepageName").length > 0) {
+        document.getElementById("myBooks").removeChild(document.getElementsByName("sectionMarquepageName")[0]);
+        }; */
+        console.log ("Suppression des donneées");
+    }
+
+    static videSectionRecherche(){
+        if (document.getElementsByName("sectionRechercheName").length>0) {
+            document.getElementById("myBooks").removeChild(document.getElementsByName("sectionRechercheName")[0]);
+            }
+    }
+
+    static videSectionResultat(){
+        if (document.getElementsByName("sectionResultatEtLblName").length> 0) {
+            document.getElementById("myBooks").removeChild(document.getElementsByName("sectionResultatEtLblName")[0]); 
+            }
+    }
+
+    static videSectionMarquepage()
+    {
+        if (document.getElementsByName("sectionMarquepageName").length > 0) {
+            document.getElementById("myBooks").removeChild(document.getElementsByName("sectionMarquepageName")[0]);
+            }
     }
 }
