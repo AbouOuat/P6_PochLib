@@ -10,34 +10,17 @@ class Book
         this.description = googleResponseItem.searchInfo?.textSnippet;
         this.image = googleResponseItem.volumeInfo?.imageLinks?.thumbnail;
 
-         /* console.log ("---");
-        console.log (this);  //Objet JAvaScript
-        console.log (googleResponseItem); // Objet JAvascript de la reponse
-        console.log (JSON.stringify(this));  //JSON
-        console.log ("---"); */
-
-        //Stockage dans une session
-        /* sessionStorage.setItem(this.identifiant,JSON.stringify(this));
-        console.log (JSON.parse(sessionStorage.getItem(this.identifiant))); */
-
-   
-
-        /* console.log (sessionStorage.getItem(googleResponseItem.id));
-           console.log (sessionStorage.getItem(googleResponseItem.id).identifiant);
-     
-        */   
     }  
 
     //si isMarquepage est renseigné alors on ajoute icone "marquepage", sinon c'est "corbeille"
     static generateBlocLivre(theBook, isMarquepage)
     {
         var idBook= theBook.identifiant;
-        //Création d'un bloc contenant tous les éléments ci-dessous
+       
         let blocBook = document.createElement("div");
         blocBook.classList.add("clsBorderBook");
-        
-        // on ajoute un nom pour après pouvoir le supprimer
         blocBook.setAttribute ("name",idBook);
+        blocBook.setAttribute ("id",idBook);
 
         //Pour Titre et marque page.. on prend un wrapper pour diviser
         let lblTitreMarquepage = document.createElement("div");
@@ -49,21 +32,17 @@ class Book
         
         let btnMarquepageTrash;
         let objMarquepageTrash;
+        btnMarquepageTrash = document.createElement ("button");
+        btnMarquepageTrash.classList.add("clsButtonGeneral");
+        objMarquepageTrash = document.createElement("i");
         if (isMarquepage=="marquePage"){
-            btnMarquepageTrash = document.createElement ("button");
-            btnMarquepageTrash.classList.add("clsButtonGeneral");
-            objMarquepageTrash = document.createElement("i");
-            objMarquepageTrash.classList.add("fa-solid", "fa-bookmark");
-            objMarquepageTrash.classList.add("clsMarquepage");
-            //objMarquepageTrash.setAttribute ("Id","idMarquepage");
+           objMarquepageTrash.classList.add("fa-solid", "fa-bookmark");
+                       
         } else{
-            btnMarquepageTrash = document.createElement ("button");
-            btnMarquepageTrash.classList.add("clsButtonGeneral");
-            objMarquepageTrash = document.createElement("i");
             objMarquepageTrash.classList.add("fa-solid", "fa-trash");
-            objMarquepageTrash.classList.add("clsMarquepage");
         }
-        
+        objMarquepageTrash.classList.add("clsMarquepage");
+
     
         //Création des éléments de livre
         let lblIdentifiant = document.createElement("div");
@@ -89,27 +68,16 @@ class Book
         //Gestion des événements
         //btnMarquepageTrash.addEventListener("click", ajoutSuppressionMarquepageTrash);
         btnMarquepageTrash.addEventListener("click", function ()
-            {
-                //Marquepage
-                /* if (isMarquepage == Book.staticMarquePage)
-                { */
-                    ajoutSuppressionMarquepageTrash(isMarquepage,idBook);
-                /*    //Si c'est déjà ajouté, on ajoute un texte ?
-
-                } else{  //Corbeille
-
-                } */
+            {ajoutSuppressionMarquepageTrash(isMarquepage,idBook);         
             }
         );
-        //btnTrash.addEventListener("click",suppressionLivre);
-
+        
         //Présentation des éléments
         btnMarquepageTrash.appendChild(objMarquepageTrash);
 
         lblTitreMarquepage.appendChild (lblTitre);
         lblTitreMarquepage.appendChild(btnMarquepageTrash);
-
-        
+  
         lblImage.appendChild (objImage);
 
         blocBook.appendChild(lblTitreMarquepage);
@@ -131,66 +99,103 @@ class Book
             console.log ("Marquepavalue:" + isMarquepage);
 
             if (isMarquepage == Book.staticMarquePage) {
-                console.log ("Marquepavalue IN:" + isMarquepage);
-                // Si ajout marquepage, 
-                //alors on check si ça existe, si oui alors on affiche msg..
-               
+                                  
                 sessionStorage.getItem(idBook)?console.log ("Déja ajoute"): console.log ("Non ajouté");
                 //sessionStorage.getItem(idBook)?Book.affichageMessage("Vous ne pouvez ajouter deux fois le même livre"):"";
                 
                 if (sessionStorage.getItem(idBook)!= null)
                 {
-                    console.log ("Dans déja ajouté");
-                    Book.affichageMessage("Vous ne pouvez ajouter deux fois le même livre");
+                   Book.affichageMessage("Vous ne pouvez ajouter deux fois le même livre");
                 } else
                 {
-                    console.log ("Dans Pas encore ajouté");
-                    //Si ça existe pas alors on ajoute
-                    //Stockage dans une session
+                     //Stockage dans une session . et afficahge
                     sessionStorage.setItem(idBook,JSON.stringify(theBook));
                     console.log (JSON.parse(sessionStorage.getItem(idBook)));
-                    affichageMarquepage(idBook);
+                    Book.affichageMarquepage(idBook);
                 }
             }
             else {
                 console.log ("on supprime :" + isMarquepage + " id de :  " + idBook);
                 sessionStorage.removeItem(idBook);
-                document.getElementsByName("sectionMarquepageName")[0].removeChild(document.getElementsByName(idBook)[1]);
-                //document.getElementsByName(idBook)[1].innerHTML="";
+                let theDoc = document.getElementsByName("sectionMarquepageName")[0];
+                
+                //Attention dans cette partie à la gestion de la valeur de retour entre Node et Element(HTML)..surtout pour 
+                //document.getElementsByName("sectionMarquepageName")[0].removeChild(document.getElementsByName(idBook)[1]);
+                //fonction document.getElementsByName(idBook)[1]  si on a 2 sections.. (parfois on en a 1 si on fait par exemple on click sur 
+                //le bouton annuler, 
+                //et on a 2 qd on est dans la recherche normale sans avoir fait annuler)
+                //Si on a 1 section, on peut pas utiliser, du coup on doit se positionner sur la bonne section et rechercher l'élément souhaité
+                //depuis la section
+                //==> let theDoc = document.getElementsByName("sectionMarquepageName")[0];
+                //==> theDoc.removeChild(theDoc.querySelector(`[name = ${idBook}]`));
+                //au lieu de 
+                //document.getElementsByName("sectionMarquepageName")[0].removeChild(document.getElementsByName(idBook)[1]);
+
+                theDoc.removeChild(theDoc.querySelector(`[name = ${idBook}]`));
+                
+                //document.querySelector("div.user-panel.main input[name='login']");
+                let docAA = document.querySelector(`[name = ${idBook}]`);
+                let docBB = theDoc.querySelector(`[name = ${idBook}]`);
+
+                //document.getElementById("myBooks").re
+
+                console.log  ("AAAA document.getElementsByName");
+                console.log (document.getElementsByName(`${idBook}`));
+                //console.log (document.getElementsByName(`${idBook}`));
+                console.log ("BBB");
+                //console.log (theDoc.getElementsByName(`${idBook}`));
+                //document.getElementsByName("sectionMarquepageName")[0].get
+                console.log ("CCC");
+                console.log (docAA);
+                console.log ("DDDD");
+                console.log (docBB);
+                console.log ("EEE");
+                //document.getElementsByName("sectionMarquepageName")[0]...
+                //document.getElementsByName("sectionMarquepageName")[0].querySelector('[id="3AuREAAAQBAJ"]')
+                //let docu = document.querySelector(name=idBook)
+
+                
                 console.log ("Suppression faite");                
             }
         }
 
         //Liste des marques
-        function affichageMarquepage(theIdBook)
-        {
-            //Creation de section pour afficher
-            console.log("affichageMarquepage");
-            console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
-
-            let sectionMarquepage;
-            if (document.getElementsByName("sectionMarquepageName").length > 0)
-            {
-                console.log (" Dans la sacrion: " + document.getElementsByName("sectionMarquepageName").length);
-                sectionMarquepage = document.getElementsByName("sectionMarquepageName")[0];
-            }
-            else {
-                sectionMarquepage = document.createElement("section");
-                sectionMarquepage.className = "clsSectionResultat";
-                sectionMarquepage.setAttribute("name","sectionMarquepageName");
-                let blsContent = document.getElementById("content");
-                //blsContent.appendChild (sectionMarquepage);
-                document.getElementById("myBooks").insertBefore (sectionMarquepage,blsContent.nextSibling);
-            }
-                 
-            let blockBookfavoris = Book.generateBlocLivre(JSON.parse(sessionStorage.getItem(theIdBook)),"");
-                 
-            //blsContent.appendChild (blockBookfavoris);
-            sectionMarquepage.appendChild(blockBookfavoris);
-           
-        }
+        //Book.affichageMarquepage(idBook);
+        
         return blocBook;
     }
+
+
+    static affichageMarquepage(theIdBook)
+    {
+        //Creation de section pour afficher
+        console.log("affichageMarquepage");
+        console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
+
+        let sectionMarquepage;
+        if (document.getElementsByName("sectionMarquepageName").length > 0)
+        {
+            console.log (" Dans la sacrion: " + document.getElementsByName("sectionMarquepageName").length);
+            sectionMarquepage = document.getElementsByName("sectionMarquepageName")[0];
+        }
+        else {
+            sectionMarquepage = document.createElement("section");
+            sectionMarquepage.className = "clsSectionResultat";
+            sectionMarquepage.setAttribute("name","sectionMarquepageName");
+            sectionMarquepage.setAttribute("id","sectionMarquepageName");
+            let blsContent = document.getElementById("content");
+            //blsContent.appendChild (sectionMarquepage);
+            document.getElementById("myBooks").insertBefore (sectionMarquepage,blsContent.nextSibling);
+        }
+        console.log ( "Valeur Id book");
+        console.log (theIdBook);    
+        let blockBookfavoris = Book.generateBlocLivre(JSON.parse(sessionStorage.getItem(theIdBook)),"");
+                
+        //blsContent.appendChild (blockBookfavoris);
+        sectionMarquepage.appendChild(blockBookfavoris);
+        
+    }
+
 
     static affichageMessage (strMessage)
     {
@@ -203,11 +208,5 @@ class Book
         console.log(" le mesage " + strMessage);
         setTimeout(function(){ lblMessage.className = lblMessage.className.replace("show", ""); }, 3000);
         console.log (" Après le messsage");
-
-       /*  { <div id="snackbar">Some text some message..</div>
-        var x = document.getElementById("snackbar");
-        x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000); } */
-
     }
 }

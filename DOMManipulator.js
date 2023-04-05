@@ -7,30 +7,20 @@ class DOMManipulator
     static addAddButton()
     {
         let sectionNouveauLivre = document.getElementById("myBooks");
-        let strHR = document.getElementsByTagName("hr")[0]; //Crochet avec 0 pour prendre le premier hr
+        let strHR = document.getElementsByTagName("hr")[0];
         let boutonAjoutLivre = document.createElement("button");
         boutonAjoutLivre.textContent="Ajouter un livre";
         boutonAjoutLivre.name="ajoutLivre";
         boutonAjoutLivre.classList.add("clsButton");
-        
-
-        //boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch.bind(null,"toto")); //On appelle DOMManipulator.insertFieldSearch variable = function
-      //ou
-
         boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch.bind(null,"toto")); //On appelle DOMManipulator.insertFieldSearch variable = function
-         
-
         sectionNouveauLivre.insertBefore(boutonAjoutLivre,strHR );
-             
     }
 
 
     static insertFieldSearch (test)
     {
-        // console.log(event);
-        //console.log (test);
         let sectionNouveauLivre = document.getElementById("myBooks");
-        let strHR = document.getElementsByTagName("hr")[0]; //Crochet avec 0 pour prendre le premier hr
+        let strHR = document.getElementsByTagName("hr")[0];
 
         //Section avec la zone de recherche
         let sectionRecherche = document.createElement("section");
@@ -43,13 +33,13 @@ class DOMManipulator
         */
        
           //Ajout des zones de texte  .. A SUPPRIMER
-         let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
+        let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
 
 
-      /*    let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les ZSZDZDZ");
-     
-         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo"); */
+      /*    
+        let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les ZSZDZDZ");
+        let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo"); */
         
 
 
@@ -62,14 +52,12 @@ class DOMManipulator
         //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
         sBoutonRechercher.classList.add("clsButtonrechercher");
         sBoutonRechercher.addEventListener("click", async function (){
+            //Vide la session
+            //sessionStorage.clear();
 
-            
-            //Vider la session
-            sessionStorage.clear();
-            
             //Vide le contenu des sections resultat et marquepage
-            DOMManipulator.videSectionResultat();
-            DOMManipulator.videSectionMarquepage();
+            DOMManipulator.videSectionResultat(); 
+            //DOMManipulator.videSectionMarquepage();
 
             //Lance la recherche
             let googleBooksAPI = new GoogleBooksAPI();
@@ -88,9 +76,7 @@ class DOMManipulator
                 }
             }
            //Affichage des resultats
-           DOMManipulator.affichageResultats(listBooks); //On gère le contenu vide ou non, de listBooks, dans la méthode affichageResultat
-             
-
+           DOMManipulator.affichageResultats(listBooks);
         });
 
         
@@ -102,20 +88,10 @@ class DOMManipulator
         //sBoutonAnnuler.classList.add("clsButton--orange");
 
         let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--orange");
-        //Sur click de Annuler , ondoit réafficher les elments via css  (notamment).
         sBoutonAnnuler.addEventListener("click",DOMManipulator.annulerRechercheMarquepage);
 
 
         //let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--test1");
-
-        //Insertion dans le DOM
-        /* sectionNouveauLivre.insertBefore (sTitreLivreTextBox,strHR);
-        sectionNouveauLivre.insertBefore (sAuteurLivreTextBox, strHR);
-
-        sectionNouveauLivre.insertBefore (sBoutonRechercher,strHR);
-        sectionNouveauLivre.insertBefore (sDiv,strHR);
-        sectionNouveauLivre.insertBefore (sBoutonAnnuler, strHR); */
-
 
         sectionRecherche.appendChild (sTitreLivreTextBox);
         sectionRecherche.appendChild (sAuteurLivreTextBox);
@@ -131,9 +107,6 @@ class DOMManipulator
         //A modifier , on doit le cacher  (via CSS) ..et non le supprimer finalement
         //ajoutLivre
         document.getElementsByName("ajoutLivre")[0].style.display ='none';
-        //input.style.display = 'none';
-        //event.target.parentNode.removeChild(event.target);
-
     }
   
 
@@ -156,9 +129,6 @@ class DOMManipulator
         divFormat.appendChild (titreLivre);
         labelTitreLivre.appendChild (boutonBr);
         labelTitreLivre.appendChild(divFormat);
-      /* labelTitreLivre.appendChild (boutonBr);
-        labelTitreLivre.appendChild(titreLivre);
-       */
         return labelTitreLivre;
 
     }
@@ -177,7 +147,6 @@ class DOMManipulator
 
         return boutonLivre;
         //return boutonLivreParag;
-
     }
 
      
@@ -223,38 +192,45 @@ class DOMManipulator
         else {
             sectionResultat.innerHTML += "Aucun livre n'a été trouvé";
         }
-
-        //positionnnemt des balises
-
         sectionNouveauLivre.insertBefore(sectionResultatEtFavoris,strContent);
-        
-        //sectionNouveauLivre.insertBefore(sectionResultat,strContent);
-        /* sectionNouveauLivre.insertBefore(lblResultatRecherche,strContent);
-        sectionNouveauLivre.insertBefore(sectionResultat,strContent); */
-        
+   }
+
+
+
+    static refreshMarquepage()
+    {
+        //Converire le session storage ne liste de lvre
+        //passer à 
+        if (sessionStorage.length>0)
+        {
+
+            let listBooks = [];
+            for (let i=0; i< sessionStorage.length; i++)
+            {
+                let bookVal = JSON.parse(sessionStorage.getItem(sessionStorage.key(i)));
+                if (bookVal.identifiant != undefined){
+                    listBooks.push(bookVal);
+                    Book.affichageMarquepage(bookVal.identifiant);
+                }
+            }
+            console.log ("FROM MArquepage");
+            console.log (listBooks);
+            /* array.forEach( Book => {
+                
+            }); */
+            
+        }
     }
-
-
     static annulerRechercheMarquepage()
     {
         //Vider la session
-        sessionStorage.clear();
+        //sessionStorage.clear();
 
         DOMManipulator.videSectionRecherche();
         DOMManipulator.videSectionResultat();
-        DOMManipulator.videSectionMarquepage();
+        //DOMManipulator.videSectionMarquepage();
 
         document.getElementsByName("ajoutLivre")[0].style.display ='block';
-        /* //Su^pprimer le contenu
-        if (document.getElementsByName("sectionRechercheName").length>0) {
-        document.getElementById("myBooks").removeChild(document.getElementsByName("sectionRechercheName")[0]);
-        }
-        if (document.getElementsByName("sectionResultatEtLblName").length> 0) {
-        document.getElementById("myBooks").removeChild(document.getElementsByName("sectionResultatEtLblName")[0]); 
-        }
-        if (document.getElementsByName("sectionMarquepageName").length > 0) {
-        document.getElementById("myBooks").removeChild(document.getElementsByName("sectionMarquepageName")[0]);
-        }; */
         console.log ("Suppression des donneées");
     }
 

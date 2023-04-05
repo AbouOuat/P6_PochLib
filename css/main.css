@@ -135,13 +135,13 @@ h2 {
 
 .wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
   background-color: rgba(0, 0, 0, 0);
 }
 
 .wrapperLigne {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto;
   background-color: rgba(0, 0, 0, 0);
 }
 
