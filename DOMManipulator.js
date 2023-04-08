@@ -48,9 +48,12 @@ class DOMManipulator
         //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
         //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton clsButton__rechercher2");
         
-        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
-        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
-        sBoutonRechercher.classList.add("clsButtonrechercher");
+        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
+        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
+        //sBoutonRechercher.classList.add("clsButtonrechercher");
+
+        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton__rechercher2");
+        //sBoutonRechercher.classList.add("clsButtonclsButtonrechercher");
         sBoutonRechercher.addEventListener("click", async function (){
             //Vide la session
             //sessionStorage.clear();
@@ -136,13 +139,13 @@ class DOMManipulator
     static generateButton(id,sLabel,sClassName)
     {
         let boutonLivreParag = document.createElement("div");
-        let boutonBr = document.createElement("br");
+        //let boutonBr = document.createElement("br");
         let boutonLivre = document.createElement("button");
         boutonLivre.textContent=sLabel;
         boutonLivre.name=id;
         //boutonLivre.className=sClassName;
         boutonLivre.classList.add(sClassName);
-        boutonLivreParag.appendChild(boutonBr);    
+        //boutonLivreParag.appendChild(boutonBr);    
         boutonLivreParag.appendChild(boutonLivre);
 
         return boutonLivre;

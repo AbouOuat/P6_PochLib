@@ -1,15 +1,31 @@
 @use 'variable' as v;
 
+body {
+    font-family: v.$font-family;
+    text-align: center;
+    background-color: v.$transparent-color;
+}
+
 h1 {
     color: v.$primary-color;
-    font-size: 4rem;
+    display: grid;
+    font-size: 1rem;
+    height: 35px;
+    width: 100%;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+    background-color: v.$background-color;
+    align-items: center;
+    border-bottom: 1mm ridge currentColor;
+    //ridge solid    double  groove  inset
+   // box-shadow: 6px 0px 25px rgba(224, 19, 19, 0.5); 
 }
 
 h2 {
     
     font-size: 1.5rem;
     margin: 0.1rem 0;
-    text-align: center;
     margin-bottom: 15px;
 }
 
@@ -18,18 +34,29 @@ h2 {
 	padding: 15px;
 	border: none;
     background: v.$secondary-color;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    border-radius: 10px;
+    color: v.$background-color;
+    border-radius: 10px;    
     margin-bottom: 15px;
     
-    display: block;
-  margin-left: auto;
-  margin-right: auto;
-    .clsButtonrechercher{
+    //display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* .clsButton__clsButtonrechercher{
+        
+       // align-items:;
         background:  rgb(255, 255, 120);
         margin-left: 0px;
-    }
+
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    
+        -ms-flex-align: left;
+        -webkit-align-items: left;
+        -webkit-box-align: left;
+        align-items: left;
+        
+    } */
       
 }
 
@@ -39,7 +66,7 @@ h2 {
 	border: none;
     background: v.$orange-color;
     color: rgb(255, 255, 255);
-    text-align: center;
+    //text-align: center;
     border-radius: 10px;
     margin-bottom: 15px;  
 }
@@ -54,7 +81,6 @@ h2 {
     text-align: center;
     border-radius: 10px;
     margin-bottom: 15px;
-    
     display: block;
     margin-left: 0px;
   }
@@ -78,22 +104,17 @@ h2 {
 .clsSectionRecherche {
     text-align: left;
 }
+
 .clsBorderBook {
-
-    /* display: flex;
-    flex-wrap: wrap; */
-    max-width: 45%;
-    width: 45%;
-    padding: 1px;
-  //align-items: center;
-
-  box-sizing: content-box;
-  border: 2px solid #0e0e0e;
+    max-width: 30%;
+    padding: 10px;
+    box-sizing: content-box;
+    border: 2px solid #0e0e0e;
     border-style: solid;
     border-width: 1px;
     background-color: darkgrey;
-    //border-radius: 10px;
     margin: 10px;
+
 }
 
 .clsLblResultatRecherche{
@@ -105,7 +126,7 @@ h2 {
 .clsTitre{
     text-align: left;
     font-weight: bold;
-    font-family: "sans-serif";
+    //font-family: "sans-serif";
     //margin: 0.1rem 0;
     margin-bottom: 5px;
     //padding-bottom: 20px;
@@ -122,18 +143,17 @@ margin-bottom: 5px;
 
 .clsAuteur{
     text-align: left;
-    font-family: "sans-serif";
     margin-bottom: 5px;
 }
 
 .clsDescription{
-    font-family: "sans-serif";
     text-align: left;
     margin-bottom: 5px;
 }
 
 .clsImageContent{
     text-align: center;
+    align-self: center;
    }
 
 .clsImage{
@@ -151,37 +171,19 @@ margin-bottom: 5px;
 
 .wrapper {
     display: grid;
-    //grid-template-columns: 1fr 1fr;
-    grid-template-rows:auto;
-    
-    background-color: v.$transparent-color;
-    
+    grid-template-columns: 9fr 1fr;
 }
 
-.wrapperLigne {
-    display: grid;
-    //grid-template-rows: 1fr 1fr;
-    grid-template-rows:auto;
-    background-color: v.$transparent-color;
-    
-}
 .clsButtonGeneral {
     text-align: right;
     border-style: none;
-    background-color: v.$transparent-color;
+    //background-color: v.$transparent-color;
+    background-color: darkgrey;
 }
 
 .clsSectionResultat {
     display: flex;
     flex-wrap: wrap;
-    //align-items: center;
-  //box-sizing: border-box;
-  //border: 2px solid #EEE;
-  //border: 2px solid #EEE;
-    /* display: grid;
-    grid-template-columns:1fr 1fr;*/
-
-    background-color: v.$transparent-color;
 }
 
 .clsInput{
@@ -189,6 +191,7 @@ margin-bottom: 5px;
     width: -moz-available;          /* WebKit-based browsers will ignore this. */
     width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
     width: fill-available;
+    padding: 4px;
 }
 
 //Ajout message pour favoris déjà présent
