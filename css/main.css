@@ -34,22 +34,6 @@ h2 {
   margin-bottom: 15px;
   margin-left: auto;
   margin-right: auto;
-  /* .clsButton__clsButtonrechercher{
-
-     // align-items:;
-      background:  rgb(255, 255, 120);
-      margin-left: 0px;
-
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-
-      -ms-flex-align: left;
-      -webkit-align-items: left;
-      -webkit-box-align: left;
-      align-items: left;
-
-  } */
 }
 
 .clsButton--orange {
@@ -57,39 +41,11 @@ h2 {
   padding: 15px;
   border: none;
   background: #e7800b;
-  color: rgb(255, 255, 255);
+  color: rgb(238, 238, 238);
   border-radius: 10px;
   margin-bottom: 15px;
 }
 
-.clsButton__rechercher2 {
-  width: 200px;
-  padding: 15px;
-  border: none;
-  background: #059340;
-  color: rgb(255, 255, 255);
-  text-align: center;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  display: block;
-  margin-left: 0px;
-}
-
-/* .clsButton{
-    width: 200px;
-	padding: 15px;
-	border: none;
-    //background: #069691;
-    //background: v.$secondary-color;
-    color: rgb(255, 255, 255);
-    text-align: center;
-    .clsButton--orange{
-        background: v.$orange-color;
-    } 
-    .clsButton--centre{
-       align-items: center;
-    } 
-} */
 .clsSectionRecherche {
   text-align: left;
 }
@@ -103,34 +59,33 @@ h2 {
   border-width: 1px;
   background-color: darkgrey;
   margin: 10px;
+  text-align: left;
+}
+.clsBorderBook .wrapper {
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+}
+.clsBorderBook .wrapper .clsTitre {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.clsBorderBook .wrapper .clsButtonGeneral {
+  text-align: right;
+  border-style: none;
+  background-color: darkgrey;
+}
+.clsBorderBook .clsIdentifiant {
+  font: italic bold 1em "sans-serif";
+  margin-bottom: 5px;
+}
+.clsBorderBook .clsAuteur, .clsBorderBook .clsDescription {
+  margin-bottom: 5px;
 }
 
 .clsLblResultatRecherche {
   font-size: 1.5rem;
   margin: 0.1rem 0;
   text-align: center;
-}
-
-.clsTitre {
-  text-align: left;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.clsIdentifiant {
-  text-align: left;
-  font: italic bold 1em "sans-serif";
-  margin-bottom: 5px;
-}
-
-.clsAuteur {
-  text-align: left;
-  margin-bottom: 5px;
-}
-
-.clsDescription {
-  text-align: left;
-  margin-bottom: 5px;
 }
 
 .clsImageContent {
@@ -149,17 +104,6 @@ h2 {
   margin-top: 1px;
   margin-right: 1px;
   color: #059340;
-}
-
-.wrapper {
-  display: grid;
-  grid-template-columns: 9fr 1fr;
-}
-
-.clsButtonGeneral {
-  text-align: right;
-  border-style: none;
-  background-color: darkgrey;
 }
 
 .clsSectionResultat {

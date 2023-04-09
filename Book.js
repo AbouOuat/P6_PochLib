@@ -12,7 +12,7 @@ class Book
 
     }  
 
-    //si isMarquepage est renseigné alors on ajoute icone "marquepage", sinon c'est "corbeille"
+    //si isMarquepage est renseigné alors icone "marquepage", sinon c'est "corbeille"
     static generateBlocLivre(theBook, isMarquepage)
     {
         var idBook= theBook.identifiant;
@@ -44,7 +44,7 @@ class Book
         objMarquepageTrash.classList.add("clsMarquepage");
 
     
-        //Création des éléments de livre
+        //Eléments de livre
         let lblIdentifiant = document.createElement("div");
         lblIdentifiant.innerHTML+="Id : " + theBook.identifiant;
         lblIdentifiant.classList.add("clsIdentifiant");
@@ -85,13 +85,9 @@ class Book
         blocBook.appendChild(lblAuteur);
         blocBook.appendChild(lblDescription);
         blocBook.appendChild(lblImage);
-        //blocBook.appendChild(btnTrash);
-        console.log(" Le bloc" );
-        console.log(blocBook);
-
+       
 
         //Les fonctions
-
         //Ajout Marquepage
         function ajoutSuppressionMarquepageTrash(isMarquepage,idBook)
         {
@@ -100,7 +96,7 @@ class Book
 
             if (isMarquepage == Book.staticMarquePage) {
                                   
-                sessionStorage.getItem(idBook)?console.log ("Déja ajoute"): console.log ("Non ajouté");
+                //sessionStorage.getItem(idBook)?console.log ("Déja ajoute"): console.log ("Non ajouté");
                 //sessionStorage.getItem(idBook)?Book.affichageMessage("Vous ne pouvez ajouter deux fois le même livre"):"";
                 
                 if (sessionStorage.getItem(idBook)!= null)
@@ -110,72 +106,34 @@ class Book
                 {
                      //Stockage dans une session . et afficahge
                     sessionStorage.setItem(idBook,JSON.stringify(theBook));
-                    console.log (JSON.parse(sessionStorage.getItem(idBook)));
+                    //console.log (JSON.parse(sessionStorage.getItem(idBook)));
                     Book.affichageMarquepage(idBook);
                 }
             }
             else {
-                console.log ("on supprime :" + isMarquepage + " id de :  " + idBook);
+                //console.log ("on supprime :" + isMarquepage + " id de :  " + idBook);
                 sessionStorage.removeItem(idBook);
                 let theDoc = document.getElementsByName("sectionMarquepageName")[0];
-                
-                //Attention dans cette partie à la gestion de la valeur de retour entre Node et Element(HTML)..surtout pour 
-                //document.getElementsByName("sectionMarquepageName")[0].removeChild(document.getElementsByName(idBook)[1]);
-                //fonction document.getElementsByName(idBook)[1]  si on a 2 sections.. (parfois on en a 1 si on fait par exemple on click sur 
-                //le bouton annuler, 
-                //et on a 2 qd on est dans la recherche normale sans avoir fait annuler)
-                //Si on a 1 section, on peut pas utiliser, du coup on doit se positionner sur la bonne section et rechercher l'élément souhaité
-                //depuis la section
-                //==> let theDoc = document.getElementsByName("sectionMarquepageName")[0];
-                //==> theDoc.removeChild(theDoc.querySelector(`[name = ${idBook}]`));
-                //au lieu de 
-                //document.getElementsByName("sectionMarquepageName")[0].removeChild(document.getElementsByName(idBook)[1]);
-
                 theDoc.removeChild(theDoc.querySelector(`[name = ${idBook}]`));
                 
                 //document.querySelector("div.user-panel.main input[name='login']");
-                let docAA = document.querySelector(`[name = ${idBook}]`);
-                let docBB = theDoc.querySelector(`[name = ${idBook}]`);
+                /* let docAA = document.querySelector(`[name = ${idBook}]`);
+                let docBB = theDoc.querySelector(`[name = ${idBook}]`); */
 
-                //document.getElementById("myBooks").re
-
-                console.log  ("AAAA document.getElementsByName");
-                console.log (document.getElementsByName(`${idBook}`));
-                //console.log (document.getElementsByName(`${idBook}`));
-                console.log ("BBB");
-                //console.log (theDoc.getElementsByName(`${idBook}`));
-                //document.getElementsByName("sectionMarquepageName")[0].get
-                console.log ("CCC");
-                console.log (docAA);
-                console.log ("DDDD");
-                console.log (docBB);
-                console.log ("EEE");
-                //document.getElementsByName("sectionMarquepageName")[0]...
-                //document.getElementsByName("sectionMarquepageName")[0].querySelector('[id="3AuREAAAQBAJ"]')
-                //let docu = document.querySelector(name=idBook)
-
-                
-                console.log ("Suppression faite");                
             }
         }
-
-        //Liste des marques
-        //Book.affichageMarquepage(idBook);
-        
         return blocBook;
     }
 
 
     static affichageMarquepage(theIdBook)
     {
-        //Creation de section pour afficher
-        console.log("affichageMarquepage");
-        console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
+        //Section pour afficher
+        //console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
 
         let sectionMarquepage;
         if (document.getElementsByName("sectionMarquepageName").length > 0)
         {
-            console.log (" Dans la sacrion: " + document.getElementsByName("sectionMarquepageName").length);
             sectionMarquepage = document.getElementsByName("sectionMarquepageName")[0];
         }
         else {
@@ -184,14 +142,10 @@ class Book
             sectionMarquepage.setAttribute("name","sectionMarquepageName");
             sectionMarquepage.setAttribute("id","sectionMarquepageName");
             let blsContent = document.getElementById("content");
-            //blsContent.appendChild (sectionMarquepage);
             document.getElementById("myBooks").insertBefore (sectionMarquepage,blsContent.nextSibling);
         }
-        console.log ( "Valeur Id book");
-        console.log (theIdBook);    
         let blockBookfavoris = Book.generateBlocLivre(JSON.parse(sessionStorage.getItem(theIdBook)),"");
                 
-        //blsContent.appendChild (blockBookfavoris);
         sectionMarquepage.appendChild(blockBookfavoris);
         
     }
@@ -204,9 +158,6 @@ class Book
         lblMessage.innerHTML += strMessage;
         lblMessage.classList.add("show");
         document.getElementById("content").appendChild(lblMessage);
-        console.log(strMessage);
-        console.log(" le mesage " + strMessage);
         setTimeout(function(){ lblMessage.className = lblMessage.className.replace("show", ""); }, 3000);
-        console.log (" Après le messsage");
     }
 }
