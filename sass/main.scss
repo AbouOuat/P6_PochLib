@@ -58,14 +58,12 @@ h2 {
 }
 
 .clsBorderBook {
-    max-width: 30%;
-    padding: 10px;  
+    width: 99%;  
     box-sizing: content-box;
     border: 2px solid #0e0e0e;
     border-style: solid;
     border-width: 1px;
     background-color: darkgrey;
-    margin: 10px;
     text-align: left;
     .wrapper {
         display: grid;
@@ -121,8 +119,10 @@ h2 {
 }
 
 .clsSectionResultat {
-    display: flex;
+    display:inline-flex;
     flex-wrap: wrap;
+    gap: 10px;
+
 }
 
 .clsInput{
@@ -133,6 +133,17 @@ h2 {
     padding: 4px;
 }
 
+
+@media screen and (min-width:768px) and (max-width :1024px )  {
+    .clsBorderBook {
+        width: 48%; }  
+    
+}
+@media screen and (min-width:1025px)  {
+    .clsBorderBook {
+        width: 32%; }  
+    
+}
 //Ajout message pour favoris déjà présent
 #snackbar {
     visibility: hidden;
