@@ -1,43 +1,31 @@
 import {ElementCreator} from './ElementCreator.js';
 class DOMManipulator
 {
-    static elementCreator = new ElementCreator();
     constructor ()
     { }
     
     static addAddButton()
     {
+        let elementCreator = new ElementCreator();
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strHR = document.getElementsByTagName("hr")[0];
-
-        //let elementCreator = new ElementCreator();
-
-        /* let boutonAjoutLivre = document.createElement("button");
-        boutonAjoutLivre.textContent="Ajouter un livre";
-        boutonAjoutLivre.name="ajoutLivre";
-        boutonAjoutLivre.classList.add("clsButton"); */
-        let boutonAjoutLivre = this.elementCreator.generateButton("ajoutLivre","Ajouter un livre","clsButton");
-        boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch.bind(null,"toto")); 
+        let boutonAjoutLivre = elementCreator.generateButton("ajoutLivre","Ajouter un livre","clsButton");
+        //boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch.bind(null,"toto")); 
+        boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch); 
         sectionNouveauLivre.insertBefore(boutonAjoutLivre,strHR );
     }
 
 
-    static insertFieldSearch (test)
+    //static insertFieldSearch (test)
+    static insertFieldSearch()
     {
+        let elementCreator = new ElementCreator();
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strHR = document.getElementsByTagName("hr")[0];
-        
-        //let elementCreator = new ElementCreator();
-
         //Section recherche
-        let sectionRecherche = this.elementCreator.createSection("sectionRechercheName","clsSectionRecherche");
-        /* document.createElement("section");
-        sectionRecherche.classList.add("clsSectionRecherche");
-        sectionRecherche.setAttribute("name","sectionRechercheName"); */
+        let sectionRecherche = elementCreator.createSection("sectionRechercheName","clsSectionRecherche");
 
-       
-       
-        //zones de texte
+       //zones de texte
         /* let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre");
         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur"); */
         
@@ -46,21 +34,17 @@ class DOMManipulator
         //let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
         //let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
         
-        let sTitreLivreTextBox = this.elementCreator.createTextBox ("titreLivre","Titre du livre","les misérables");
-        let sAuteurLivreTextBox = this.elementCreator.createTextBox("auteurLivre","Auteur","Hugo");
+        let sTitreLivreTextBox = elementCreator.createTextBox ("titreLivre","Titre du livre","les misérables");
+        let sAuteurLivreTextBox = elementCreator.createTextBox("auteurLivre","Auteur","Hugo");
 
-        //let sTitreLivreTextBox = createTextBox ("titreLivre","Titre du livre","les misérables");
-
-
-    
-        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
-        let sBoutonRechercher  = this.elementCreator.generateButton("btnRechercher","Rechercher","clsButton");
+       //Bouton Rechercher
+        let sBoutonRechercher  = elementCreator.generateButton("btnRechercher","Rechercher","clsButton");
         sBoutonRechercher.addEventListener("click", async function ()
         {
             //session
             //sessionStorage.clear();
 
-            //sections resultat et marquepage
+            //Resultat et marque page
             DOMManipulator.videSectionResultat(); 
             //DOMManipulator.videSectionMarquepage();
 
@@ -82,9 +66,9 @@ class DOMManipulator
         });
 
         
-        let sDiv  =  document.createElement("Div");
-        //let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--orange");
-        let sBoutonAnnuler = this.elementCreator.generateButton("btnAnnuler","Annuler","clsButton--orange");
+        let sDiv  =  elementCreator.createElementGen("Div","","");
+        //Bouton Annuler
+        let sBoutonAnnuler = elementCreator.generateButton("btnAnnuler","Annuler","clsButton--orange");
         sBoutonAnnuler.addEventListener("click",DOMManipulator.annulerRechercheMarquepage);
 
         sectionRecherche.appendChild (sTitreLivreTextBox);
@@ -92,81 +76,28 @@ class DOMManipulator
         sectionRecherche.appendChild (sBoutonRechercher);
         sectionRecherche.appendChild (sDiv);
         sectionRecherche.appendChild (sBoutonAnnuler);
-
         sectionNouveauLivre.insertBefore(sectionRecherche,strHR);
 
         document.getElementsByName("ajoutLivre")[0].style.display ='none';
     }
   
-
-    /* static generateTextBox(id,sLabel,valueDefault)
-    {
-        let labelTitreLivre = document.createElement("p");
-        labelTitreLivre.innerText = sLabel;
-        
-        let boutonBr = document.createElement("br");
-        let divFormat = document.createElement("div");
-        
-        //Faire function
-       let titreLivre = document.createElement("INPUT");
-        titreLivre.setAttribute ("type", "text");
-        titreLivre.setAttribute ("name",id);
-        titreLivre.setAttribute ("id",id);
-        titreLivre.setAttribute ("value",valueDefault);
-        titreLivre.setAttribute ("class","clsInput"); 
-
-        divFormat.appendChild (titreLivre);
-        labelTitreLivre.appendChild (boutonBr);
-        labelTitreLivre.appendChild(divFormat);
-        return labelTitreLivre;
-
-    } */
-
-    /* //A mettre dans lemen creator
-    static generateButton(id,sLabel,sClassName)
-    {
-        let boutonLivreParag = document.createElement("div");
-        let boutonLivre = document.createElement("button");
-        boutonLivre.textContent=sLabel;
-        boutonLivre.name=id;
-        boutonLivre.classList.add(sClassName);
-        boutonLivreParag.appendChild(boutonLivre);
-        return boutonLivre;
-    } */
-
      
     static affichageResultats (listBooks)
     {
+        let elementCreator = new ElementCreator();
         /* 
         la section qui contiendra les résultats
         la section qui contiendra l'ajout des bookmark (marquage) en même temps
         */
-
-        //let elementCreator = new ElementCreator();
-
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strContent = document.getElementById("content");
 
-        /* let sectionResultatEtFavoris = document.createElement("section");
-        sectionResultatEtFavoris.className = "clsSectionResultatEtLbl";
-        sectionResultatEtFavoris.setAttribute("name","sectionResultatEtLblName"); */
-
-        let sectionResultatEtFavoris = this.elementCreator.createSection("sectionResultatEtLblName","clsSectionResultatEtLbl");
-        /* sectionResultatEtFavoris.className = "clsSectionResultatEtLbl";
-        sectionResultatEtFavoris.setAttribute("name","sectionResultatEtLblName");
- */
-        let divResultatRecherche = document.createElement("div");
-
-        let lblResultatRecherche = this.elementCreator.createElementGen("h2","clsLblResultatRecherche","Résultat de recherche");
-        /* let lblResultatRecherche = document.createElement("h2");
-        lblResultatRecherche.innerHTML += "Résultat de recherche";
-        lblResultatRecherche.className = "clsLblResultatRecherche"; */
+        let sectionResultatEtFavoris    = elementCreator.createSection("sectionResultatEtLblName","clsSectionResultatEtLbl");
+        let divResultatRecherche        = elementCreator.createElementGen("div","","");
+        let lblResultatRecherche        = elementCreator.createElementGen("h2","clsLblResultatRecherche","Résultat de recherche");
+        let sectionResultat             = elementCreator.createSection("clsSectionResultatName","clsSectionResultat");
         
-        //let sectionResultat = document.createElement("section");
-        //sectionResultat.className = "clsSectionResultat";
-        let sectionResultat = this.elementCreator.createSection("clsSectionResultatName","clsSectionResultat");
         divResultatRecherche.appendChild (lblResultatRecherche);
-
         sectionResultatEtFavoris.appendChild (divResultatRecherche);
         sectionResultatEtFavoris.appendChild (sectionResultat);
  
