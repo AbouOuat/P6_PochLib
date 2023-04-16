@@ -68,10 +68,9 @@ h2 {
     .wrapper {
         display: grid;
         grid-template-columns: 9fr 1fr;
-
+        margin: 5px;
         .clsTitre {
             font-weight: bold;
-            margin-bottom: 5px;
          }
 
         .clsButtonGeneral {
@@ -84,11 +83,11 @@ h2 {
 
     .clsIdentifiant{
         font: italic bold 1em "sans-serif";
-        margin-bottom: 5px;
+        margin: 5px;
      }
 
     .clsAuteur, .clsDescription{
-       margin-bottom: 5px;
+        margin: 5px;
     }
 
     
@@ -122,7 +121,7 @@ h2 {
     display:inline-flex;
     flex-wrap: wrap;
     gap: 10px;
-
+    margin-bottom:10px ;
 }
 
 .clsInput{
@@ -131,6 +130,8 @@ h2 {
     width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
     width: fill-available;
     padding: 4px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 

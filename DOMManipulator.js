@@ -1,5 +1,7 @@
+import {ElementCreator} from './ElementCreator.js';
 class DOMManipulator
 {
+    static elementCreator = new ElementCreator();
     constructor ()
     { }
     
@@ -7,10 +9,14 @@ class DOMManipulator
     {
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strHR = document.getElementsByTagName("hr")[0];
-        let boutonAjoutLivre = document.createElement("button");
+
+        //let elementCreator = new ElementCreator();
+
+        /* let boutonAjoutLivre = document.createElement("button");
         boutonAjoutLivre.textContent="Ajouter un livre";
         boutonAjoutLivre.name="ajoutLivre";
-        boutonAjoutLivre.classList.add("clsButton");
+        boutonAjoutLivre.classList.add("clsButton"); */
+        let boutonAjoutLivre = this.elementCreator.generateButton("ajoutLivre","Ajouter un livre","clsButton");
         boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch.bind(null,"toto")); 
         sectionNouveauLivre.insertBefore(boutonAjoutLivre,strHR );
     }
@@ -20,32 +26,45 @@ class DOMManipulator
     {
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strHR = document.getElementsByTagName("hr")[0];
+        
+        //let elementCreator = new ElementCreator();
 
         //Section recherche
-        let sectionRecherche = document.createElement("section");
+        let sectionRecherche = this.elementCreator.createSection("sectionRechercheName","clsSectionRecherche");
+        /* document.createElement("section");
         sectionRecherche.classList.add("clsSectionRecherche");
-        sectionRecherche.setAttribute("name","sectionRechercheName");
+        sectionRecherche.setAttribute("name","sectionRechercheName"); */
 
+       
+       
         //zones de texte
         /* let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre");
         let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur"); */
         
+        
           //Ajout des zones de texte  .. A SUPPRIMER
-        let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
-        let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
+        //let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
+        //let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
+        
+        let sTitreLivreTextBox = this.elementCreator.createTextBox ("titreLivre","Titre du livre","les misérables");
+        let sAuteurLivreTextBox = this.elementCreator.createTextBox("auteurLivre","Auteur","Hugo");
+
+        //let sTitreLivreTextBox = createTextBox ("titreLivre","Titre du livre","les misérables");
 
 
-        let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
+    
+        //let sBoutonRechercher  = DOMManipulator.generateButton("btnRechercher","Rechercher","clsButton");
+        let sBoutonRechercher  = this.elementCreator.generateButton("btnRechercher","Rechercher","clsButton");
         sBoutonRechercher.addEventListener("click", async function ()
         {
-            //Vide la session
+            //session
             //sessionStorage.clear();
 
-            //Vide sections resultat et marquepage
+            //sections resultat et marquepage
             DOMManipulator.videSectionResultat(); 
             //DOMManipulator.videSectionMarquepage();
 
-            //Lance la recherche
+            //Recherche
             let googleBooksAPI = new GoogleBooksAPI();
             let titre = document.getElementById("titreLivre").value;
             let auteur = document.getElementById("auteurLivre").value;
@@ -64,7 +83,8 @@ class DOMManipulator
 
         
         let sDiv  =  document.createElement("Div");
-        let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--orange");
+        //let sBoutonAnnuler = DOMManipulator.generateButton("btnAnnuler","Annuler","clsButton--orange");
+        let sBoutonAnnuler = this.elementCreator.generateButton("btnAnnuler","Annuler","clsButton--orange");
         sBoutonAnnuler.addEventListener("click",DOMManipulator.annulerRechercheMarquepage);
 
         sectionRecherche.appendChild (sTitreLivreTextBox);
@@ -79,7 +99,7 @@ class DOMManipulator
     }
   
 
-    static generateTextBox(id,sLabel,valueDefault)
+    /* static generateTextBox(id,sLabel,valueDefault)
     {
         let labelTitreLivre = document.createElement("p");
         labelTitreLivre.innerText = sLabel;
@@ -87,20 +107,22 @@ class DOMManipulator
         let boutonBr = document.createElement("br");
         let divFormat = document.createElement("div");
         
-        let titreLivre = document.createElement("INPUT");
+        //Faire function
+       let titreLivre = document.createElement("INPUT");
         titreLivre.setAttribute ("type", "text");
         titreLivre.setAttribute ("name",id);
         titreLivre.setAttribute ("id",id);
         titreLivre.setAttribute ("value",valueDefault);
-        titreLivre.setAttribute ("class","clsInput");
+        titreLivre.setAttribute ("class","clsInput"); 
 
         divFormat.appendChild (titreLivre);
         labelTitreLivre.appendChild (boutonBr);
         labelTitreLivre.appendChild(divFormat);
         return labelTitreLivre;
 
-    }
+    } */
 
+    /* //A mettre dans lemen creator
     static generateButton(id,sLabel,sClassName)
     {
         let boutonLivreParag = document.createElement("div");
@@ -110,7 +132,7 @@ class DOMManipulator
         boutonLivre.classList.add(sClassName);
         boutonLivreParag.appendChild(boutonLivre);
         return boutonLivre;
-    }
+    } */
 
      
     static affichageResultats (listBooks)
@@ -120,20 +142,29 @@ class DOMManipulator
         la section qui contiendra l'ajout des bookmark (marquage) en même temps
         */
 
+        //let elementCreator = new ElementCreator();
+
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strContent = document.getElementById("content");
 
-        let sectionResultatEtFavoris = document.createElement("section");
+        /* let sectionResultatEtFavoris = document.createElement("section");
         sectionResultatEtFavoris.className = "clsSectionResultatEtLbl";
-        sectionResultatEtFavoris.setAttribute("name","sectionResultatEtLblName");
+        sectionResultatEtFavoris.setAttribute("name","sectionResultatEtLblName"); */
 
+        let sectionResultatEtFavoris = this.elementCreator.createSection("sectionResultatEtLblName","clsSectionResultatEtLbl");
+        /* sectionResultatEtFavoris.className = "clsSectionResultatEtLbl";
+        sectionResultatEtFavoris.setAttribute("name","sectionResultatEtLblName");
+ */
         let divResultatRecherche = document.createElement("div");
-        let lblResultatRecherche = document.createElement("h2");
+
+        let lblResultatRecherche = this.elementCreator.createElementGen("h2","clsLblResultatRecherche","Résultat de recherche");
+        /* let lblResultatRecherche = document.createElement("h2");
         lblResultatRecherche.innerHTML += "Résultat de recherche";
-        lblResultatRecherche.className = "clsLblResultatRecherche";
+        lblResultatRecherche.className = "clsLblResultatRecherche"; */
         
-        let sectionResultat = document.createElement("section");
-        sectionResultat.className = "clsSectionResultat";
+        //let sectionResultat = document.createElement("section");
+        //sectionResultat.className = "clsSectionResultat";
+        let sectionResultat = this.elementCreator.createSection("clsSectionResultatName","clsSectionResultat");
         divResultatRecherche.appendChild (lblResultatRecherche);
 
         sectionResultatEtFavoris.appendChild (divResultatRecherche);
@@ -155,8 +186,6 @@ class DOMManipulator
         sectionNouveauLivre.insertBefore(sectionResultatEtFavoris,strContent);
    }
 
-
-
     static refreshMarquepage()
     {
         if (sessionStorage.length>0)
@@ -175,9 +204,7 @@ class DOMManipulator
 
     static annulerRechercheMarquepage()
     {
-        //Vider la session
         //sessionStorage.clear();
-
         DOMManipulator.videSectionRecherche();
         DOMManipulator.videSectionResultat();
         //DOMManipulator.videSectionMarquepage();
@@ -204,3 +231,5 @@ class DOMManipulator
             }
     }
 }
+
+export {DOMManipulator};

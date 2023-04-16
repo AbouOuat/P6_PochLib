@@ -22,7 +22,7 @@ class Book
         blocBook.setAttribute ("name",idBook);
         blocBook.setAttribute ("id",idBook);
 
-        //Pour Titre et marque page.. on prend un wrapper pour diviser
+        //Titre et marque page dans un wrapper pour diviser
         let lblTitreMarquepage = document.createElement("div");
         lblTitreMarquepage.classList.add("wrapper");
         
@@ -66,7 +66,6 @@ class Book
      
     
         //Gestion des événements
-        //btnMarquepageTrash.addEventListener("click", ajoutSuppressionMarquepageTrash);
         btnMarquepageTrash.addEventListener("click", function ()
             {ajoutSuppressionMarquepageTrash(isMarquepage,idBook);         
             }
@@ -95,31 +94,21 @@ class Book
             console.log ("Marquepavalue:" + isMarquepage);
 
             if (isMarquepage == Book.staticMarquePage) {
-                                  
-                //sessionStorage.getItem(idBook)?console.log ("Déja ajoute"): console.log ("Non ajouté");
-                //sessionStorage.getItem(idBook)?Book.affichageMessage("Vous ne pouvez ajouter deux fois le même livre"):"";
-                
                 if (sessionStorage.getItem(idBook)!= null)
                 {
                    Book.affichageMessage("Vous ne pouvez ajouter deux fois le même livre");
                 } else
                 {
-                     //Stockage dans une session . et afficahge
                     sessionStorage.setItem(idBook,JSON.stringify(theBook));
                     //console.log (JSON.parse(sessionStorage.getItem(idBook)));
                     Book.affichageMarquepage(idBook);
                 }
             }
             else {
-                //console.log ("on supprime :" + isMarquepage + " id de :  " + idBook);
                 sessionStorage.removeItem(idBook);
                 let theDoc = document.getElementsByName("sectionMarquepageName")[0];
                 theDoc.removeChild(theDoc.querySelector(`[name = ${idBook}]`));
-                
-                //document.querySelector("div.user-panel.main input[name='login']");
-                /* let docAA = document.querySelector(`[name = ${idBook}]`);
-                let docBB = theDoc.querySelector(`[name = ${idBook}]`); */
-
+ 
             }
         }
         return blocBook;
