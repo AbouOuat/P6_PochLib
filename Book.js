@@ -73,12 +73,9 @@ class Book
         
         //Présentation des éléments
         btnMarquepageTrash.appendChild(objMarquepageTrash);
-
         lblTitreMarquepage.appendChild (lblTitre);
         lblTitreMarquepage.appendChild(btnMarquepageTrash);
-  
         lblImage.appendChild (objImage);
-
         blocBook.appendChild(lblTitreMarquepage);
         blocBook.appendChild(lblIdentifiant);
         blocBook.appendChild(lblAuteur);
@@ -105,9 +102,11 @@ class Book
                 }
             }
             else {
-                sessionStorage.removeItem(idBook);
+                
                 let theDoc = document.getElementsByName("sectionMarquepageName")[0];
-                theDoc.removeChild(theDoc.querySelector(`[name = ${idBook}]`));
+                //theDoc.removeChild(theDoc.querySelector(`[name = ${idBook}]`)); provoque erreur lorque idBook commence par un chiffre
+                theDoc.removeChild(theDoc.querySelector(`[name = ${CSS.escape(idBook)}]`));
+                sessionStorage.removeItem(idBook);
  
             }
         }
@@ -119,7 +118,6 @@ class Book
     {
         //Section pour afficher
         //console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
-
         let sectionMarquepage;
         if (document.getElementsByName("sectionMarquepageName").length > 0)
         {
