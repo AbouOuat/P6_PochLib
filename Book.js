@@ -39,35 +39,14 @@ class Book
 
     
         //Eléments de livre
-        /* let lblIdentifiant = document.createElement("div");
-        lblIdentifiant.innerHTML+="Id : " + theBook.identifiant;
-        lblIdentifiant.classList.add("clsIdentifiant"); */
-
         let lblIdentifiant = elementCreator.createElementGen ("div","","clsIdentifiant","Id : " + theBook.identifiant,"");
-
-
-        /* let lblAuteur = document.createElement("div");
-        lblAuteur.innerHTML+="Auteur : " + theBook.auteur;
-        lblAuteur.classList.add("clsAuteur"); */
         let lblAuteur = elementCreator.createElementGen ("div","","clsAuteur","Auteur : " + theBook.auteur,"");
-
         let theDesc = theBook.description ? theBook.description.slice(0,200) : "Information manquante";
-        /* let lblDescription = document.createElement("div");
-        lblDescription.innerHTML+="Description : " +  theDesc;
-        lblDescription.classList.add("clsDescription"); */
         let lblDescription = elementCreator.createElementGen ("div","","clsDescription","Description : " +  theDesc,"");
-
-
-        /* let lblImage = document.createElement("div");
-        lblImage.classList.add("clsImageContent"); */
         let lblImage = elementCreator.createElementGen ("div","","clsImageContent","","");
-
-        /* let objImage = document.createElement("img");
-        objImage.classList.add("clsImage"); */
         let objImage = elementCreator.createElementGen ("img","","clsImage","","");
         objImage.src = theBook.image ? theBook.image : "/images/unavailable.png" ;
-     
-    
+
         //Gestion des événements
         btnMarquepageTrash.addEventListener("click", function ()
             {ajoutSuppressionMarquepageTrash(isMarquepage,idBook);         
@@ -90,9 +69,6 @@ class Book
         //Ajout Marquepage
         function ajoutSuppressionMarquepageTrash(isMarquepage,idBook)
         {
-            console.log ("ajoutSuppressionMarquepageTrash " + idBook);
-            console.log ("Marquepavalue:" + isMarquepage);
-
             if (isMarquepage == Book.staticMarquePage) {
                 if (sessionStorage.getItem(idBook)!= null)
                 {
@@ -128,12 +104,7 @@ class Book
             sectionMarquepage = document.getElementsByName("sectionMarquepageName")[0];
         }
         else {
-            /* sectionMarquepage = document.createElement("section");
-            sectionMarquepage.className = "clsSectionResultat";
-            sectionMarquepage.setAttribute("name","sectionMarquepageName");
-            sectionMarquepage.setAttribute("id","sectionMarquepageName"); */
             sectionMarquepage = elementCreator.createElementGen ("section","sectionMarquepageName","clsSectionResultat","","sectionMarquepageName");
-            //createElementGen (sType,sName,sClassName,sText, sId)
             let blsContent = document.getElementById("content");
             document.getElementById("myBooks").insertBefore (sectionMarquepage,blsContent.nextSibling);
         }

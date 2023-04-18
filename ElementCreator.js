@@ -18,7 +18,7 @@ class ElementCreator
         titreLivre.setAttribute ("type", "text");
         titreLivre.setAttribute ("name",id);
         titreLivre.setAttribute ("id",id);
-        titreLivre.setAttribute ("value",valueDefault);
+        if (valueDefault) {titreLivre.setAttribute ("value",valueDefault);};
         titreLivre.setAttribute ("class","clsInput");
 
         divFormat.appendChild (labelTitreLivre);

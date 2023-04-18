@@ -9,13 +9,10 @@ class DOMManipulator
         let sectionNouveauLivre = document.getElementById("myBooks");
         let strHR = document.getElementsByTagName("hr")[0];
         let boutonAjoutLivre = elementCreator.generateButton("ajoutLivre","Ajouter un livre","clsButton");
-        //boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch.bind(null,"toto")); 
         boutonAjoutLivre.addEventListener("click", DOMManipulator.insertFieldSearch); 
         sectionNouveauLivre.insertBefore(boutonAjoutLivre,strHR );
     }
-
-
-    //static insertFieldSearch (test)
+   
     static insertFieldSearch()
     {
         let elementCreator = new ElementCreator();
@@ -25,16 +22,8 @@ class DOMManipulator
         let sectionRecherche = elementCreator.createSection("sectionRechercheName","clsSectionRecherche");
 
        //zones de texte
-        /* let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre");
-        let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur"); */
-        
-        
-          //Ajout des zones de texte  .. A SUPPRIMER
-        //let sTitreLivreTextBox  = DOMManipulator.generateTextBox("titreLivre","Titre du livre","les misérables");
-        //let sAuteurLivreTextBox = DOMManipulator.generateTextBox("auteurLivre","Auteur","Hugo");
-        
-        let sTitreLivreTextBox = elementCreator.createTextBox ("titreLivre","Titre du livre","les misérables");
-        let sAuteurLivreTextBox = elementCreator.createTextBox("auteurLivre","Auteur","Hugo");
+        let sTitreLivreTextBox = elementCreator.createTextBox ("titreLivre","Titre du livre","");
+        let sAuteurLivreTextBox = elementCreator.createTextBox("auteurLivre","Auteur","");
 
        //Bouton Rechercher
         let sBoutonRechercher  = elementCreator.generateButton("btnRechercher","Rechercher","clsButton");
@@ -102,7 +91,6 @@ class DOMManipulator
  
         if (listBooks.length > 0)
         {
-            console.log ("Nombrede res:"+listBooks.length);
             //sectionResultat
             for (let i=0; i<listBooks.length; i++)
             {

@@ -8,7 +8,6 @@ class GoogleBooksAPI {
     async searchBooks (sTitreLivre, sAuteurLivre)
     {
     let request= this.uRLSearchBook.replace("{0}",sTitreLivre).replace("{1}",sAuteurLivre).replace("{2}",sTitreLivre);
-    console.log (request);
     let resultat = await fetch(request).then((response)=> {
         return response.json();
         });
