@@ -1,4 +1,3 @@
-import {DOMManipulator} from './DOMManipulator.js';
-//Point d'entrée de la page du site
+//Point d'entrée du site
 DOMManipulator.addAddButton();
 DOMManipulator.refreshMarquepage();

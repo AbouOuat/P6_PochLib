@@ -1,4 +1,3 @@
-import {ElementCreator} from './ElementCreator.js';
 class DOMManipulator
 {
     constructor ()
@@ -66,7 +65,7 @@ class DOMManipulator
         });
 
         
-        let sDiv  =  elementCreator.createElementGen("Div","","");
+        let sDiv  =  elementCreator.createElementGen("DIV","","","","");
         //Bouton Annuler
         let sBoutonAnnuler = elementCreator.generateButton("btnAnnuler","Annuler","clsButton--orange");
         sBoutonAnnuler.addEventListener("click",DOMManipulator.annulerRechercheMarquepage);
@@ -93,9 +92,9 @@ class DOMManipulator
         let strContent = document.getElementById("content");
 
         let sectionResultatEtFavoris    = elementCreator.createSection("sectionResultatEtLblName","clsSectionResultatEtLbl");
-        let divResultatRecherche        = elementCreator.createElementGen("div","","");
-        let lblResultatRecherche        = elementCreator.createElementGen("h2","clsLblResultatRecherche","Résultat de recherche");
-        let sectionResultat             = elementCreator.createSection("clsSectionResultatName","clsSectionResultat");
+        let divResultatRecherche        = elementCreator.createElementGen("DIV","","","","");
+        let lblResultatRecherche        = elementCreator.createElementGen("h2","clsLblResultatRecherche","clsLblResultatRecherche","Résultat de recherche","");
+        let sectionResultat             = elementCreator.createSection("clsSectionResultatName","clsSectionResultat","");
         
         divResultatRecherche.appendChild (lblResultatRecherche);
         sectionResultatEtFavoris.appendChild (divResultatRecherche);
@@ -162,5 +161,3 @@ class DOMManipulator
             }
     }
 }
-
-export {DOMManipulator};

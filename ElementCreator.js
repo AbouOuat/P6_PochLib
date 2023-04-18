@@ -48,13 +48,13 @@ class ElementCreator
         return theSection;
     }
 
-    createElementGen (sName,sClassName,sText)
+    createElementGen (sType,sName,sClassName,sText, sId)
     {
-        let theElement = document.createElement(sName);
-        theElement.setAttribute("name",sName);
-        if (sClassName) {theElement.classList.add(sClassName);}
-        if (sText){theElement.innerHTML += sText;}
+        let theElement = document.createElement(sType);
+        if (sName) {theElement.setAttribute("name",sName);};
+        if (sClassName) {theElement.classList.add(sClassName);};
+        if (sText){theElement.innerHTML += sText;};
+        if (sId){theElement.setAttribute ("id",sId);};
         return theElement;
     }
 }
-export { ElementCreator };

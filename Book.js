@@ -15,20 +15,14 @@ class Book
     //si isMarquepage est renseigné alors icone "marquepage", sinon c'est "corbeille"
     static generateBlocLivre(theBook, isMarquepage)
     {
+        let elementCreator = new ElementCreator();
         var idBook= theBook.identifiant;
        
-        let blocBook = document.createElement("div");
-        blocBook.classList.add("clsBorderBook");
-        blocBook.setAttribute ("name",idBook);
-        blocBook.setAttribute ("id",idBook);
+        let blocBook = elementCreator.createElementGen("div",idBook,"clsBorderBook","",idBook);
 
         //Titre et marque page dans un wrapper pour diviser
-        let lblTitreMarquepage = document.createElement("div");
-        lblTitreMarquepage.classList.add("wrapper");
-        
-        let lblTitre = document.createElement("div");
-        lblTitre.innerHTML+="Titre : " + theBook.titre;
-        lblTitre.classList.add("clsTitre");
+        let lblTitreMarquepage = elementCreator.createElementGen("div","","wrapper","","");
+        let lblTitre = elementCreator.createElementGen("div","","clsTitre","Titre : " + theBook.titre,"");
         
         let btnMarquepageTrash;
         let objMarquepageTrash;
@@ -45,23 +39,32 @@ class Book
 
     
         //Eléments de livre
-        let lblIdentifiant = document.createElement("div");
+        /* let lblIdentifiant = document.createElement("div");
         lblIdentifiant.innerHTML+="Id : " + theBook.identifiant;
-        lblIdentifiant.classList.add("clsIdentifiant");
+        lblIdentifiant.classList.add("clsIdentifiant"); */
 
-        let lblAuteur = document.createElement("div");
+        let lblIdentifiant = elementCreator.createElementGen ("div","","clsIdentifiant","Id : " + theBook.identifiant,"");
+
+
+        /* let lblAuteur = document.createElement("div");
         lblAuteur.innerHTML+="Auteur : " + theBook.auteur;
-        lblAuteur.classList.add("clsAuteur");
+        lblAuteur.classList.add("clsAuteur"); */
+        let lblAuteur = elementCreator.createElementGen ("div","","clsAuteur","Auteur : " + theBook.auteur,"");
 
         let theDesc = theBook.description ? theBook.description.slice(0,200) : "Information manquante";
-        let lblDescription = document.createElement("div");
+        /* let lblDescription = document.createElement("div");
         lblDescription.innerHTML+="Description : " +  theDesc;
-        lblDescription.classList.add("clsDescription");
+        lblDescription.classList.add("clsDescription"); */
+        let lblDescription = elementCreator.createElementGen ("div","","clsDescription","Description : " +  theDesc,"");
 
-        let lblImage = document.createElement("div");
-        lblImage.classList.add("clsImageContent");
-        let objImage = document.createElement("img");
-        objImage.classList.add("clsImage");
+
+        /* let lblImage = document.createElement("div");
+        lblImage.classList.add("clsImageContent"); */
+        let lblImage = elementCreator.createElementGen ("div","","clsImageContent","","");
+
+        /* let objImage = document.createElement("img");
+        objImage.classList.add("clsImage"); */
+        let objImage = elementCreator.createElementGen ("img","","clsImage","","");
         objImage.src = theBook.image ? theBook.image : "/images/unavailable.png" ;
      
     
@@ -116,6 +119,7 @@ class Book
 
     static affichageMarquepage(theIdBook)
     {
+        let elementCreator = new ElementCreator();
         //Section pour afficher
         //console.log (JSON.parse(sessionStorage.getItem(theIdBook)));
         let sectionMarquepage;
@@ -124,10 +128,12 @@ class Book
             sectionMarquepage = document.getElementsByName("sectionMarquepageName")[0];
         }
         else {
-            sectionMarquepage = document.createElement("section");
+            /* sectionMarquepage = document.createElement("section");
             sectionMarquepage.className = "clsSectionResultat";
             sectionMarquepage.setAttribute("name","sectionMarquepageName");
-            sectionMarquepage.setAttribute("id","sectionMarquepageName");
+            sectionMarquepage.setAttribute("id","sectionMarquepageName"); */
+            sectionMarquepage = elementCreator.createElementGen ("section","sectionMarquepageName","clsSectionResultat","","sectionMarquepageName");
+            //createElementGen (sType,sName,sClassName,sText, sId)
             let blsContent = document.getElementById("content");
             document.getElementById("myBooks").insertBefore (sectionMarquepage,blsContent.nextSibling);
         }
